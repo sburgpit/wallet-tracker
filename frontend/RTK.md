@@ -1,0 +1,1 @@
+https://dev.to/raaynaldo/rtk-query-tutorial-crud-51hl#:~:text=According%20to%20Redux%20Toolkit%20documentation,data%20fetching%20%26%20caching%20logic%20yourself
