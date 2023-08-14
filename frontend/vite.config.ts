@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => ({
   },
   server: {
     host: true,
-    port: mode === 'dev' ? 5173 : 3000,
+    port: mode === 'dev' ? 5173 : 3030,
   },
   plugins: [react(), tsconfigPaths()],
 }))
