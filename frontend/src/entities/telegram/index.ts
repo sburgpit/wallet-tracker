@@ -1,1 +1,1 @@
-export { useTelegram } from './lib/useTelegram'
+export { telegramSlice } from './model/telegramSlice'

@@ -1,17 +1,23 @@
-import Routing from 'pages'
-import { withProviders } from './providers'
-import './styles/index.scss'
 import { useEffect } from 'react'
-import { useTelegram } from 'entities/telegram'
+import { useAppDispatch, useAppSelector } from 'shared/lib/hooks'
+import { initSessionThunk } from 'features/auth/init'
+import { RouterProvider } from './providers/RouterProvider'
+import { selectIsInited } from 'entities/session'
+import './styles/index.scss'
 
 const App = () => {
-  const { telegram } = useTelegram()
+  const isSessionInited = useAppSelector(selectIsInited)
+  const dispatch = useAppDispatch()
+
+  // useEffect(() => {
+  //   telegram.ready()
+  // }, [])
 
   useEffect(() => {
-    telegram.ready()
-  }, [])
+    if (!isSessionInited) dispatch(initSessionThunk())
+  }, [isSessionInited, dispatch])
 
-  return <Routing />
+  return <RouterProvider />
 }
 
-export default withProviders(App)
+export default App
