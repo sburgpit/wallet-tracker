@@ -8,7 +8,7 @@ const Users: CollectionConfig = {
     cookies: {
       sameSite: 'none',
       secure: true,
-      domain: process.env.COOKIE_DOMAIN,
+      domain: process.env.PAYLOAD_PUBLIC_SITE_DOMAIN,
     },
   },
   access: {
