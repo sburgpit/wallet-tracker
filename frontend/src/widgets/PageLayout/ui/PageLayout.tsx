@@ -1,7 +1,7 @@
 import { LogoutButton } from 'features/auth/logout'
 import { Outlet } from 'react-router-dom'
 
-const PageLayout = () => {
+export const PageLayout = () => {
   return (
     <div>
       Page Layout <br />
@@ -10,5 +10,3 @@ const PageLayout = () => {
     </div>
   )
 }
-
-export default PageLayout

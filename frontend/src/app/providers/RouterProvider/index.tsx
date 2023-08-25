@@ -1,7 +1,7 @@
 import { ErrorPage } from 'pages/error'
 import { createBrowserRouter, RouterProvider as ReactRouterProvider } from 'react-router-dom'
 import { getRouteMain } from 'shared/config/routes'
-import PageLayout from 'widgets/PageLayout'
+import { PageLayout } from 'widgets/PageLayout'
 import { routerConfig } from './config/routerConfig'
 import { Suspense } from 'react'
 import { PageLoader } from 'widgets/PageLoader'

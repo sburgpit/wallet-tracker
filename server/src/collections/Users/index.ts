@@ -5,25 +5,20 @@ const Users: CollectionConfig = {
   slug: 'users',
   auth: {
     tokenExpiration: 86400 * 2, // 48 hours
-    cookies: {
-      sameSite: 'none',
-      secure: true,
-      domain: process.env.PAYLOAD_PUBLIC_SITE_DOMAIN,
-    },
   },
-  access: {
-    read: adminOrMe,
-    update: adminOrMe,
-    delete: adminOrMe,
-    create: anyone,
-  },
+  // access: {
+  //   update: adminOrMe,
+  //   delete: adminOrMe,
+  //   read: anyone,
+  //   create: anyone,
+  // },
   fields: [
     {
       type: 'select',
       name: 'roles',
       hasMany: true,
       options: ['admin', 'user'],
-      defaultValue: 'user',
+      defaultValue: ['user'],
     },
     {
       type: 'number',

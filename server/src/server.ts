@@ -23,7 +23,7 @@ const start = async () => {
     },
   })
 
-  app.listen(3333)
+  app.listen(process.env.SERVER_PORT)
 }
 
 start()
