@@ -32,7 +32,8 @@ export const sessionAPI = baseAPI.injectEndpoints({
     me: build.mutation<Session | null, void>({
       query: () => `/users/me`,
       invalidatesTags: [Tags.SESSION],
-      transformResponse: (response: SessionDTO | SessionExpireDTO) => (response.user ? mapSession(response) : null),
+      transformResponse: (response: SessionDTO | SessionExpireDTO) =>
+        response.user ? mapSession(response as SessionDTO) : null,
     }),
   }),
 })
