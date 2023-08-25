@@ -1,19 +1,28 @@
-# payload
+## Development
 
-This project was created using create-payload-app using the blank template.
+### Setting Up the Local Environment
 
-## How to Use
+1. Ensure you have Node installed, version 18.8 or higher
+2. Navigate to the directory with `cd server`
+3. Install the dependencies using `yarn install`
+4. Set environment variables in the `.env` file, following the example in `.env.example`
 
-`yarn dev` will start up your application and reload on any changes.
+### Running Locally
 
-### Docker
+1. Launch Payload CMS in development mode using `yarn dev`. For production mode test use `yarn build` then `yarn serve`
+2. The API will be accessible at [http://localhost:3000/api](http://localhost:3000/api)
+3. The admin panel will be available at [http://localhost:3000/admin](http://localhost:3000/admin)
 
-If you have docker and docker-compose installed, you can run `docker-compose up`
+## Production
 
-To build the docker image, run `docker build -t my-tag .`
+### Setting Up the Production Environment
 
-Ensure you are passing all needed environment variables when starting up your container via `--env-file` or setting them with your deployment.
+1. Navigate to the directory with `cd server`
+2. Set environment variables in the `.env` file, following the example in `.env.example`
+3. Build the container with `docker build -t wtracker-image .`
 
-The 3 typical env vars will be `MONGODB_URI`, `PAYLOAD_SECRET`, and `PAYLOAD_CONFIG_PATH`
+### Running in Production
 
-`docker run --env-file .env -p 3000:3000 my-tag`
+1. Start the container with `docker run -d -p 3000:3000 --name wtracker-container --env-file .env wtracker-image`
+2. The API will be accessible at [http://localhost:3000/api](http://localhost:3000/api)
+3. The admin panel will be available at [http://localhost:3000/admin](http://localhost:3000/admin)
