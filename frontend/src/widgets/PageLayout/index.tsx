@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 const PageLayout = () => {
   return (
     <div>
-      Page Layout 2 <br />
+      Page Layout <br />
       <Outlet />
       <LogoutButton />
     </div>
