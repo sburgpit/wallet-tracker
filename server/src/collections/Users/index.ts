@@ -1,13 +1,21 @@
 import { CollectionConfig } from 'payload/types'
+import { adminOrMe, anyone } from '../../accesses'
 
 const Users: CollectionConfig = {
   slug: 'users',
-  auth: true,
-  admin: {
-    useAsTitle: 'telegramID',
+  auth: {
+    tokenExpiration: 86400 * 2, // 48 hours
+    cookies: {
+      sameSite: 'none',
+      secure: true,
+      domain: process.env.COOKIE_DOMAIN,
+    },
   },
   access: {
-    read: () => true,
+    read: adminOrMe,
+    update: adminOrMe,
+    delete: adminOrMe,
+    create: anyone,
   },
   fields: [
     {
@@ -21,6 +29,7 @@ const Users: CollectionConfig = {
       type: 'number',
       name: 'telegramID',
       label: 'Telegram ID',
+      saveToJWT: true,
     },
     {
       type: 'relationship',

@@ -43,9 +43,8 @@ export interface Account {
   type: 'Card' | 'Account' | 'Crypto' | 'Cash';
   name: string;
   balance: number;
-  bank: string | Bank;
+  bank?: string | Bank;
   currency: string | Currency;
-  network?: 'ETH' | 'BSC' | 'TRX' | 'POLYGON';
   cryptoCurrency: string | CryptoCurrency;
   isArchived: boolean;
   includeToBalance: boolean;
