@@ -1,6 +1,6 @@
 const telegram = Telegram.WebApp
 
-const useTelegram = () => {
+export const useTelegram = () => {
   const webApp = Telegram.WebApp
 
   webApp.MainButton
@@ -16,5 +16,3 @@ const useTelegram = () => {
     disableMainButton: telegram.MainButton.disable,
   }
 }
-
-export default useTelegram
