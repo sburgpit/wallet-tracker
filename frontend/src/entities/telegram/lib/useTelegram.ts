@@ -18,6 +18,5 @@ export const useTelegram = () => {
     onEvent: telegram.onEvent,
     offEvent: telegram.offEvent,
     viewportheight: telegram.viewportHeight,
-    viewportStableHeight: telegram.viewportStableHeight,
   }
 }
