@@ -1,12 +1,7 @@
-import { LogoutButton } from 'features/auth/logout'
+import { Page } from 'widgets/Page'
 
 const DashboardPage = () => {
-  return (
-    <div>
-      Dashboard Page
-      <br /> <LogoutButton />
-    </div>
-  )
+  return <Page>Dashboard Page</Page>
 }
 
 export default DashboardPage

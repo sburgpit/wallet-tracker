@@ -1,1 +1,1 @@
-export { withGuard } from './lib/withGuard'
+export { withGuard, type Guard } from './lib/withGuard'

@@ -1,3 +1,4 @@
+import { Guard } from 'features/guard'
 import { AccountPage } from 'pages/account'
 import { AccountsPage } from 'pages/accounts'
 import { DashboardPage } from 'pages/dashboard'
@@ -20,49 +21,51 @@ import {
   getRouteSettings,
 } from 'shared/config/routes'
 
-export const routerConfig: Record<Route, RouteProps & { authOnly?: boolean; guards?: string[] }> = {
+export const routerConfig: Record<Route, RouteProps & { guards?: Guard[] }> = {
   [Route.MAIN]: {
     index: true,
     element: <DashboardPage />,
-    authOnly: true,
+    guards: ['Guest'],
   },
   [Route.DASHBOARD]: {
     path: getRouteDashboard(),
     element: <DashboardPage />,
-    authOnly: true,
+    guards: ['Guest'],
   },
   [Route.ACCOUNT]: {
     path: getRouteAccount(':id'),
     element: <AccountPage />,
-    authOnly: true,
+    guards: ['Guest'],
   },
   [Route.ACCOUNTS]: {
     path: getRouteAccounts(),
     element: <AccountsPage />,
-    authOnly: true,
+    guards: ['Guest'],
   },
   [Route.OPERATION]: {
     path: getRouteOperation(':id'),
     element: <OperationPage />,
-    authOnly: true,
+    guards: ['Guest'],
   },
   [Route.OPERATIONS]: {
     path: getRouteOperations(),
     element: <OperationsPage />,
-    authOnly: true,
+    guards: ['Guest'],
   },
   [Route.SETTINGS]: {
     path: getRouteSettings(),
     element: <SettingsPage />,
-    authOnly: true,
+    guards: ['Guest'],
   },
   [Route.LOGIN]: {
     path: getRouteLogin(),
     element: <LoginPage />,
+    guards: ['Auth'],
   },
   [Route.FORBIDDEN]: {
     path: getRouteForbidden(),
     element: <ErrorPage />,
+    guards: ['Guest'],
   },
   [Route.NOT_FOUND]: {
     path: '*',

@@ -9,5 +9,9 @@ export const LogoutButton = () => {
     dispatch(logoutThunk())
   }
 
-  return <Button onClick={onConfirmLogout}>logout</Button>
+  return (
+    <Button onClick={onConfirmLogout} size='small' color='second'>
+      Log out
+    </Button>
+  )
 }
