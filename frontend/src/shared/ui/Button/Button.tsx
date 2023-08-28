@@ -11,6 +11,7 @@ type BaseButtonProps = {
   icon?: React.ReactNode
   iconPosition?: 'left' | 'right'
   children?: React.ReactNode
+  isActive?: boolean
 }
 
 type ButtonElementProps = JSX.IntrinsicElements['button'] & BaseButtonProps
@@ -32,6 +33,7 @@ export const Button = (props: ButtonProps) => {
     loading,
     icon,
     iconPosition = 'right',
+    isActive,
     ...otherProps
   } = props
 
@@ -41,7 +43,8 @@ export const Button = (props: ButtonProps) => {
     css[`Button_variant_${variant}`],
     css[`Button_color_${color}`],
     css[`Button_size_${size}`],
-    { [css.Button_iconOnly]: !children && icon }
+    { [css.Button_iconOnly]: !children && icon },
+    { [css.Button_isActive]: isActive }
   )
 
   const Children = () => (
