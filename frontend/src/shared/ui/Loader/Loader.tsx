@@ -8,7 +8,7 @@ type LoaderProps = {
 
 export const Loader = (props: LoaderProps) => {
   const { rotationSpeed = 0.8, color = 'var(--text-color)', size = 16 } = props
-  const circleRadius = 13
+  const circleRadius = 12
   const circleCircumference = 2 * Math.PI * circleRadius
   const strokeDashoffset = circleCircumference * 0.3
 
