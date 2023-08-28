@@ -4,14 +4,16 @@ import { initSessionThunk } from 'features/auth/init'
 import { RouterProvider } from './providers/RouterProvider'
 import { selectIsInited } from 'entities/session'
 import './styles/index.scss'
+import { useTelegram } from 'entities/telegram'
 
 const App = () => {
   const isSessionInited = useAppSelector(selectIsInited)
   const dispatch = useAppDispatch()
+  const { readyApp } = useTelegram()
 
-  // useEffect(() => {
-  //   telegram.ready()
-  // }, [])
+  useEffect(() => {
+    readyApp()
+  }, [])
 
   useEffect(() => {
     if (!isSessionInited) dispatch(initSessionThunk())

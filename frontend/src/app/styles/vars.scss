@@ -1,9 +1,36 @@
 :root {
+  --tg-color-scheme: dark;
+  --tg-theme-bg-color: #17212b;
+  --tg-theme-button-color: #5288c1;
+  --tg-theme-button-text-color: #ffffff;
+  --tg-theme-hint-color: #708499;
+  --tg-theme-link-color: #6ab3f3;
+  --tg-theme-secondary-bg-color: #232e3c;
+  --tg-theme-text-color: #f5f5f5;
+  --tg-viewport-height: 498px;
+  --tg-viewport-stable-height: 498px;
+
   --bg-color: var(--tg-theme-bg-color);
   --secondary-bg-color: var(--tg-theme-secondary-bg-color);
   --text-color: var(--tg-theme-text-color);
   --hint-color: var(--tg-theme-hint-color);
-  --link-color: var(--th-theme-link-color);
+  --link-color: var(--tg-theme-link-color);
   --button-color: var(--tg-theme-button-color);
   --button-text-color: var(--tg-theme-button-text-color);
+
+  --viewport-height: var(--tg-viewport-height);
+  --viewport-stable-height: var(--tg-viewport-stable-height);
+
+  --primary-font: 'Roboto', sans-serif;
+  --second-font: 'Montserrat', sans-serif;
+  --font-size-small: 12px;
+  --font-line-small: 20px;
+  --font-size-medium: 16px;
+  --font-line-medium: 24px;
+  --font-size-large: 24px;
+  --font-line-large: 32px;
+  --font-size-title: 42px;
+  --font-line-title: 48px;
+
+  --border-radius: 12px;
 }

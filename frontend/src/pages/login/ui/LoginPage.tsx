@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { LoginForm } from 'features/auth/login'
+import { Text } from 'shared/ui/Text'
 
 const LoginPage = () => {
   const navigate = useNavigate()
@@ -11,8 +12,10 @@ const LoginPage = () => {
   }, [navigate])
 
   return (
-    <div>
-      <h1>Login page</h1>
+    <div className='flex justify-center align-center flex-column'>
+      <Text tag='h1' size='title' font='second' weight={700}>
+        Login
+      </Text>
       <LoginForm onComplete={onComplete} />
     </div>
   )

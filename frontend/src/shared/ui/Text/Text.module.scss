@@ -1,0 +1,59 @@
+.Text_font_primary {
+  font-family: var(--primary-font);
+}
+
+.Text_font_second {
+  font-family: var(--second-font);
+}
+
+.Text_weight_400 {
+  font-weight: 400;
+}
+
+.Text_weight_500 {
+  font-weight: 500;
+}
+
+.Text_weight_700 {
+  font-weight: 700;
+}
+
+.Text_color_default {
+  color: var(--text-color);
+}
+
+.Text_color_link {
+  color: var(--link-color);
+}
+
+.Text_color_hint {
+  color: var(--hint-color);
+}
+
+.Text_color_dangerous {
+  color: red;
+}
+
+.Text_color_warning {
+  color: yellow;
+}
+
+.Text_size_small {
+  font-size: var(--font-size-small);
+  line-height: var(--font-line-small);
+}
+
+.Text_size_medium {
+  font-size: var(--font-size-medium);
+  line-height: var(--font-line-medium);
+}
+
+.Text_size_large {
+  font-size: var(--font-size-large);
+  line-height: var(--font-line-large);
+}
+
+.Text_size_title {
+  font-size: var(--font-size-title);
+  line-height: var(--font-line-title);
+}

@@ -1,9 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useCallback } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { useAppDispatch } from 'shared/lib/hooks'
 import { loginThunk } from '../../model/login'
 import { type LoginFormSchema, loginFormSchema } from '../../model/loginFormSchema'
+import { Input } from 'shared/ui/Input'
+import { Button } from 'shared/ui/Button'
+import css from './LoginForm.module.scss'
 
 type Props = {
   onComplete?: () => void
@@ -13,10 +16,10 @@ export function LoginForm({ onComplete }: Props) {
   const dispatch = useAppDispatch()
 
   const {
+    control,
     setError,
-    formState: { errors },
+    formState: { errors, isLoading },
     handleSubmit,
-    register,
   } = useForm<LoginFormSchema>({
     resolver: zodResolver(loginFormSchema),
   })
@@ -35,26 +38,40 @@ export function LoginForm({ onComplete }: Props) {
   )
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmitHandler)}>
-        <div>
-          <div>
-            <label>Email</label>
-          </div>
-          <input type='email' {...register('email')} />
-          <div>{errors.email?.message}</div>
-        </div>
-        <div>
-          <div>
-            <label>Password</label>
-          </div>
-          <input type='password' {...register('password')} />
-          {errors.password && <p>{errors.password?.message}</p>}
-        </div>
-        <div>
-          <button type='submit'>Login</button>
-        </div>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit(onSubmitHandler)} className={css.Form}>
+      <Controller
+        name='email'
+        control={control}
+        defaultValue=''
+        render={({ field }) => (
+          <Input
+            id='login-form-email'
+            type='email'
+            label='Email'
+            error={errors.email?.message}
+            disabled={isLoading}
+            {...field}
+          />
+        )}
+      />
+      <Controller
+        name='password'
+        control={control}
+        defaultValue=''
+        render={({ field }) => (
+          <Input
+            id='login-form-password'
+            type='password'
+            label='Password'
+            error={errors.password?.message}
+            disabled={isLoading}
+            {...field}
+          />
+        )}
+      />
+      <Button type='submit' loading={isLoading}>
+        Send
+      </Button>
+    </form>
   )
 }
