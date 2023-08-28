@@ -4,10 +4,10 @@ import css from './DefaultLayout.module.scss'
 import { useTelegram } from 'entities/telegram'
 
 export const DefaultLayout = () => {
-  const { viewportheight } = useTelegram()
+  const { viewportStableHeight } = useTelegram()
 
   return (
-    <div className={css.DefaultLayout} style={{ height: viewportheight }}>
+    <div className={css.DefaultLayout} style={{ height: viewportStableHeight }}>
       <main className={css.DefaultLayout__Main}>
         <Outlet />
       </main>
