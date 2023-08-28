@@ -8,31 +8,31 @@ import { Input } from 'shared/ui/Input'
 import { Button } from 'shared/ui/Button'
 import css from './LoginForm.module.scss'
 
-type Props = {
+type LoginFormProps = {
   onComplete?: () => void
 }
 
-export function LoginForm({ onComplete }: Props) {
+export function LoginForm({ onComplete }: LoginFormProps) {
   const dispatch = useAppDispatch()
 
   const {
     control,
     setError,
-    formState: { errors, isLoading },
+    formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm<LoginFormSchema>({
     resolver: zodResolver(loginFormSchema),
   })
 
   const onSubmitHandler = useCallback(
-    ({ email, password }: LoginFormSchema) => {
-      dispatch(loginThunk({ email, password }))
-        .unwrap()
-        .then(() => onComplete?.())
-        .catch((error) => {
-          console.log(error)
-          setError('email', { type: 'server', message: error.message })
-        })
+    async ({ email, password }: LoginFormSchema) => {
+      try {
+        await dispatch(loginThunk({ email, password }))
+        onComplete?.()
+      } catch (e) {
+        console.log(e)
+        setError('email', { type: 'server', message: (e as Error).message })
+      }
     },
     [dispatch, onComplete, setError]
   )
@@ -49,7 +49,7 @@ export function LoginForm({ onComplete }: Props) {
             type='email'
             label='Email'
             error={errors.email?.message}
-            disabled={isLoading}
+            disabled={isSubmitting}
             {...field}
           />
         )}
@@ -64,12 +64,12 @@ export function LoginForm({ onComplete }: Props) {
             type='password'
             label='Password'
             error={errors.password?.message}
-            disabled={isLoading}
+            disabled={isSubmitting}
             {...field}
           />
         )}
       />
-      <Button type='submit' loading={isLoading}>
+      <Button type='submit' loading={isSubmitting}>
         Send
       </Button>
     </form>

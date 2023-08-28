@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY package.json yarn.lock ./
 
-RUN yarn install --ignore-engines --verbose
+RUN yarn install --ignore-engines
 
 COPY . .
 
@@ -20,7 +20,7 @@ ENV NODE_ENV=production
 WORKDIR /app
 COPY package.json yarn.lock ./
 
-RUN yarn install --production --ignore-engines --verbose
+RUN yarn install --production --ignore-engines
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/build ./build
 
