@@ -7,15 +7,16 @@ export const PageLayout = () => {
   const [view, setView] = useState<number>()
   const [viewS, setViewS] = useState<number>()
 
-  const { viewport, viewportStable, onEvent } = useTelegram()
+  const { viewport, viewportStable, onEvent, offEvent } = useTelegram()
+
+  function viewportChangeHandler() {
+    console.log(this as unknown)
+  }
 
   useEffect(() => {
-    setView(viewport)
-  }, [viewport])
-
-  useEffect(() => {
-    setViewS(viewportStable)
-  }, [viewportStable])
+    onEvent('viewportChanged', viewportChangeHandler)
+    return () => offEvent('viewportChanged', viewportChangeHandler)
+  })
 
   return (
     <main>
