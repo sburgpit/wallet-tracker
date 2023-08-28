@@ -4,8 +4,11 @@ import { LogoutButton } from 'features/auth/logout'
 import { CloseButton } from 'features/telegram/close'
 import css from './Navigation.module.scss'
 import { getRouteAccounts, getRouteDashboard, getRouteOperations, getRouteSettings } from 'shared/config/routes'
-import { Link } from 'react-router-dom'
 import { Button } from 'shared/ui/Button'
+import { AiFillHome } from 'react-icons/ai'
+import { MdAccountBalanceWallet } from 'react-icons/md'
+import { BiTransferAlt } from 'react-icons/bi'
+import { IoMdSettings } from 'react-icons/io'
 
 export const Navigation = () => {
   const isAuthorized = useAppSelector(selectIsAuth)
@@ -13,18 +16,18 @@ export const Navigation = () => {
   if (!isAuthorized) return null
 
   const links = [
-    { path: getRouteDashboard(), label: 'Dashboard' },
-    { path: getRouteAccounts(), label: 'Accounts' },
-    { path: getRouteOperations(), label: 'Operations' },
-    { path: getRouteSettings(), label: 'Settings' },
+    { path: getRouteDashboard(), icon: <AiFillHome /> },
+    { path: getRouteAccounts(), icon: <MdAccountBalanceWallet /> },
+    { path: getRouteOperations(), icon: <BiTransferAlt /> },
+    { path: getRouteSettings(), icon: <IoMdSettings /> },
   ]
 
   return (
     <div className={css.Navigation}>
       <nav className='flex gap-s'>
-        {links.map(({ path, label }) => (
-          <Button to={path} color='second' size='small'>
-            {label}
+        {links.map(({ path, icon }) => (
+          <Button to={path} color='second' size='medium'>
+            {icon}
           </Button>
         ))}
       </nav>

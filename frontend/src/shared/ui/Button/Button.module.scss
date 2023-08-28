@@ -7,6 +7,16 @@
   gap: 10px;
   flex-shrink: 0;
   border: none;
+
+  transition-property: color, background-color;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+
+  svg {
+    transition-property: fill;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+  }
 }
 
 .Button_variant_default {
@@ -17,18 +27,33 @@
   height: 26px;
   padding: 0 10px;
   font-size: var(--font-size-small);
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
 }
 
 .Button_size_medium {
   height: 36px;
   padding: 0 12px;
   font-size: var(--font-size-medium);
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 .Button_size_large {
   height: 48px;
   padding: 0 24px;
   font-size: var(--font-size-large);
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 .Button_color_primary {
@@ -46,6 +71,10 @@
   color: var(--link-color);
 }
 
+.Button_isActive.Button_color_second {
+  background-color: var(--button-color);
+}
+
 .Button_iconOnly {
   border-radius: 100px;
 }
@@ -53,28 +82,14 @@
 .Button_iconOnly.Button_size_small {
   width: 26px;
   padding: 0;
-
-  svg {
-    width: 14px;
-    height: 14px;
-  }
 }
 
 .Button_iconOnly.Button_size_medium {
   width: 36px;
   padding: 0;
-
-  svg {
-    width: 20px;
-    height: 20px;
-  }
 }
 
 .Button_iconOnly.Button_size_large {
   width: 48px;
   padding: 0;
-  svg {
-    width: 24px;
-    height: 24px;
-  }
 }
