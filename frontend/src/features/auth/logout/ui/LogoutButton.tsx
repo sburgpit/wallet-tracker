@@ -1,19 +1,13 @@
 import { useAppDispatch } from 'shared/lib/hooks/reduxHooks'
 import { logoutThunk } from '../model/logout'
+import { Button } from 'shared/ui/Button'
 
 export const LogoutButton = () => {
   const dispatch = useAppDispatch()
 
-  const onConfirmLogout = (e: React.MouseEvent<HTMLElement>) => {
-    e.stopPropagation()
-    e.preventDefault()
-
+  const onConfirmLogout = () => {
     dispatch(logoutThunk())
   }
 
-  return (
-    <a href='#' onClick={onConfirmLogout}>
-      logout
-    </a>
-  )
+  return <Button onClick={onConfirmLogout}>logout</Button>
 }

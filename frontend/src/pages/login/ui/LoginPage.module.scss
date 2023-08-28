@@ -1,0 +1,10 @@
+.LoginPage {
+  width: 100%;
+  height: calc(var(--viewport-height) - 100px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 100px;
+}

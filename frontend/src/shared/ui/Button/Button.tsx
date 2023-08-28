@@ -10,7 +10,16 @@ type ButtonProps = JSX.IntrinsicElements['button'] & {
 }
 
 export const Button = (props: ButtonProps) => {
-  const { children, className, size = 'medium', variant = 'default', color = 'default', loading, ...otherProps } = props
+  const {
+    children,
+    className,
+    size = 'medium',
+    variant = 'default',
+    color = 'default',
+    loading,
+    type = 'button',
+    ...otherProps
+  } = props
 
   const classNames = cn(
     className,
@@ -21,7 +30,7 @@ export const Button = (props: ButtonProps) => {
   )
 
   return (
-    <button className={classNames} {...otherProps}>
+    <button className={classNames} type={type} {...otherProps}>
       {loading ? <Loader /> : children}
     </button>
   )
