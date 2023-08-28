@@ -17,7 +17,7 @@ export const useTelegram = () => {
     disableMainButton: telegram.MainButton.disable,
     onEvent: telegram.onEvent,
     offEvent: telegram.offEvent,
-    viewport: telegram.viewportHeight,
-    viewportStable: telegram.viewportStableHeight,
+    viewportheight: telegram.viewportHeight,
+    viewportStableHeight: telegram.viewportStableHeight,
   }
 }
