@@ -1,16 +1,27 @@
 import { useTelegram } from 'entities/telegram'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { PageLoader } from 'widgets/PageLoader'
 
 export const PageLayout = () => {
-  const { viewport, viewportStable } = useTelegram()
+  const [view, setView] = useState<number>()
+  const [viewS, setViewS] = useState<number>()
+
+  const { viewport, viewportStable, onEvent } = useTelegram()
+
+  useEffect(() => {
+    setView(viewport)
+  }, [viewport])
+
+  useEffect(() => {
+    setViewS(viewportStable)
+  }, [viewportStable])
 
   return (
     <main>
-      <span>vh: {viewport}</span>
+      <span>vh: {view}</span>
       <br />
-      <span>vsh: {viewportStable}</span>
+      <span>vsh: {viewS}</span>
       <Outlet />
     </main>
   )
