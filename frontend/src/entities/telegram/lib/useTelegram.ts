@@ -7,7 +7,8 @@ export const useTelegram = () => {
 
   return {
     telegram: telegram,
-    initData: telegram.initData,
+    initData: telegram.initDataUnsafe,
+    isExpanded: telegram.isExpanded,
     closeApp: telegram.close,
     readyApp: telegram.ready,
     expandApp: telegram.expand,
