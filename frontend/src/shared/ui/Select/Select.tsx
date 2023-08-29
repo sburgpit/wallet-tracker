@@ -49,7 +49,10 @@ export const Select = (props: SelectProps) => {
         setMaxHeight(availableSpace)
       }
 
-      if (searchInputRef?.current) searchInputRef.current.focus()
+      if (searchInputRef?.current) {
+        searchInputRef.current.focus()
+        searchInputRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+      }
     } else {
       setTimeout(() => {
         setSearch('')
