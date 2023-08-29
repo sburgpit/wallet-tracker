@@ -51,7 +51,7 @@ export const Select = (props: SelectProps) => {
 
       if (searchInputRef?.current) {
         searchInputRef.current.focus()
-        searchInputRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+        searchInputRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }
     } else {
       setTimeout(() => {
