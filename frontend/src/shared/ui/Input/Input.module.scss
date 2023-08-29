@@ -1,6 +1,12 @@
 .Input {
   position: relative;
   transition: opacity 0.3s ease;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--hint-color);
+  height: 36px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
 }
 
 .Input_disabled {
@@ -8,40 +14,27 @@
 }
 
 .Input input {
-  width: calc(100% - 24px);
-  height: 36px;
-  border-radius: var(--border-radius);
-  border: none;
+  width: 100%;
   outline: none;
-  background-color: var(--secondary-bg-color);
+  border: none;
+  background-color: transparent;
   color: var(--text-color);
-  font-size: var(--font-size-medium);
-  padding: 0 12px;
+  margin-left: 12px;
 }
 
 .Input__Label {
-  position: absolute;
-  font-size: var(--font-size-medium);
-  top: 50%;
-  transform: translateY(-50%);
-  left: 12px;
-  transition: font-size 0.3s ease, top 0.3s ease;
-  cursor: pointer;
+  color: var(--hint-color);
+  padding-right: 8px;
 }
 
 .Input:focus-within .Input__Label {
-  top: -30%;
-  font-size: var(--font-size-small);
+  border-right: 1px solid var(--hint-color);
 }
 
-.Input input:not(:placeholder-shown) + .Input__Label {
-  top: -30%;
-  font-size: var(--font-size-small);
+.Input_hasValue .Input__Label {
+  border-right: 1px solid var(--hint-color);
 }
 
 .Input__Error {
-  bottom: 0;
-  transform: translateY(100%);
-  left: 12px;
   padding: 0 12px;
 }

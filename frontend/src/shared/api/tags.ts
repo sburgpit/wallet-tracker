@@ -1,4 +1,5 @@
 export enum Tags {
   SESSION = 'session',
-  USER = 'user'
+  USER = 'user',
+  ACCOUNT = 'account',
 }

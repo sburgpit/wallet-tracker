@@ -44,7 +44,7 @@
   }
 }
 
-.SelectButton_hasValue.SelectButton_isOpen {
+.SelectButton_hasValue.SelectButton_isOpen.SelectButton_searchable {
   .SelectButton__Value {
     font-size: var(--font-size-small);
     top: 3px;

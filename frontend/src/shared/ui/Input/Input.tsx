@@ -1,30 +1,50 @@
 import css from './Input.module.scss'
-import { Text } from '../Text'
+import { ErrorText, Text } from '../Text'
 import { cn } from 'shared/lib/utils/classNames'
-import { forwardRef } from 'react'
+import { forwardRef, useState } from 'react'
 
 type InputProps = JSX.IntrinsicElements['input'] & {
   label: string
   error?: string
+  type?: 'password' | 'email' | 'text' | 'number'
+  onChange?: (value: string | undefined) => void
+  defaultValue?: string
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { label, error, className, id, disabled, value = '' } = props
+  const { type = 'text', label, error, className, id, disabled, placeholder, onChange, defaultValue, ...other } = props
+  const [value, setValue] = useState<string | undefined>(() => defaultValue)
+
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.value
+    setValue(value)
+    onChange?.(value)
+  }
+
   return (
     <div>
-      <div className={cn(className, css.Input, { [css.Input_disabled]: disabled })}>
-        <input value={value} placeholder='' {...props} ref={ref} />
+      <div
+        className={cn(className, css.Input, {
+          [css.Input_disabled]: disabled,
+          [css.Input_hasValue]: value !== undefined,
+        })}>
         {label && (
           <label className={css.Input__Label} htmlFor={id}>
             {label}
           </label>
         )}
+        <input
+          id={id}
+          type={type}
+          value={value}
+          disabled={disabled}
+          placeholder={placeholder || ''}
+          onChange={changeHandler}
+          {...other}
+          ref={ref}
+        />
       </div>
-      {error && (
-        <Text className={css.Input__Error} color='dangerous' tag='span' size='small'>
-          {error}
-        </Text>
-      )}
+      {error && <ErrorText className={css.Input__Error}>{error}</ErrorText>}
     </div>
   )
 })

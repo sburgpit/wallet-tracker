@@ -1,6 +1,6 @@
 import { cn } from 'shared/lib/utils/classNames'
 import css from './Select.module.scss'
-import { Text } from '../Text'
+import { ErrorText } from '../Text'
 import { useEffect, useRef, useState } from 'react'
 import { SlArrowDown } from 'react-icons/sl'
 import { useOnClickOutside } from 'shared/lib/hooks'
@@ -23,6 +23,7 @@ type SelectProps = {
   hasMany?: boolean
   defaultValue?: string | number
   isLoading?: boolean
+  searchable?: boolean
   onChange?: (value: (string | number)[] | null) => void
 }
 
@@ -30,7 +31,7 @@ const normalizeOption = (option: SelectOption): { label: string; value: string |
   typeof option === 'string' ? { label: option, value: option } : option
 
 export const Select = (props: SelectProps) => {
-  const { options, error, disabled, className, defaultValue, hasMany, label, isLoading } = props
+  const { options, error, disabled, className, defaultValue, hasMany, label, isLoading, searchable, onChange } = props
   const [selectValue, setSelectValue] = useState<(string | number)[]>(defaultValue ? [defaultValue] : [])
   const [search, setSearch] = useState<string>('')
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -49,7 +50,7 @@ export const Select = (props: SelectProps) => {
         setMaxHeight(availableSpace)
       }
 
-      if (searchInputRef?.current) {
+      if (searchInputRef?.current && searchable) {
         searchInputRef.current.focus()
         searchInputRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }
@@ -59,7 +60,11 @@ export const Select = (props: SelectProps) => {
         setMaxHeight(undefined)
       }, 300)
     }
-  }, [isOpen])
+  }, [isOpen, searchable])
+
+  useEffect(() => {
+    onChange?.(selectValue)
+  }, [selectValue])
 
   const changeHandler = (optionValue: string | number) => {
     if (hasMany) {
@@ -72,12 +77,12 @@ export const Select = (props: SelectProps) => {
     setSelectValue([optionValue])
   }
 
-  const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.currentTarget.value.toLowerCase())
+  const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.currentTarget.value)
   const toggleOpen = () => setIsOpen((prev) => !prev)
 
   const renderOptions = () => {
     const filteredOptions = options?.filter((option) => {
-      if (!search) return true
+      if (!searchable || !search) return true
       const { label, value, search: optionSearch } = normalizeOption(option)
       const searchFields = [
         label.toLocaleLowerCase(),
@@ -115,12 +120,13 @@ export const Select = (props: SelectProps) => {
         className={cn(css.SelectButton, {
           [css.SelectButton_isOpen]: isOpen,
           [css.SelectButton_hasValue]: selectValue.length,
+          [css.SelectButton_searchable]: searchable,
         })}
         onClick={toggleOpen}>
         <span className={css.SelectButton__Label}>{label}</span>
         <div className='rel w100 h100'>
           {selectValue.length > 0 && <span className={css.SelectButton__Value}>{selectValue.join(', ')}</span>}
-          {isOpen && (
+          {isOpen && searchable && (
             <input
               value={search}
               placeholder={'Search...'}
@@ -140,11 +146,7 @@ export const Select = (props: SelectProps) => {
           <SlArrowDown />
         </div>
       </div>
-      {error && (
-        <Text color='dangerous' tag='span' size='small'>
-          {error}
-        </Text>
-      )}
+      {error && <ErrorText>{error}</ErrorText>}
       <div
         className={cn(css.SelectOptions, { [css.SelectOptions_isOpen]: isOpen })}
         style={{ maxHeight: `${maxHeight}px` }}>

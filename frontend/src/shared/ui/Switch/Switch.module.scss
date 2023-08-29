@@ -1,0 +1,45 @@
+.Switch {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  &_disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+.Switch__Label {
+  color: var(--hint-color);
+}
+
+.Switch__Slider {
+  position: relative;
+  height: 24px;
+  width: 48px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--hint-color);
+  background-color: transparent;
+  transition: border-color 0.3s ease;
+
+  &:before {
+    position: absolute;
+    content: '';
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 2px;
+    background-color: var(--hint-color);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    border-radius: 18px;
+  }
+
+  &_checked {
+    border-color: var(--button-color);
+    &:before {
+      transform: translateX(23px);
+      background-color: var(--button-color);
+    }
+  }
+}

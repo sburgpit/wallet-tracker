@@ -1,5 +1,5 @@
 import { useAccountsQuery } from 'entities/accounts'
-import { selectUserID } from 'entities/user/model/userSlice'
+import { selectUserID } from 'entities/user'
 import { useAppSelector } from 'shared/lib/hooks'
 import { Shimmer } from 'shared/ui/Shimmer'
 import { Text } from 'shared/ui/Text'
