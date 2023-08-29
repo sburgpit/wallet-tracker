@@ -1,10 +1,9 @@
-import { SessionTransform, sessionSlice } from 'entities/session'
+import { sessionSlice } from 'entities/session'
 import { themeSlice } from 'entities/theme'
 import storage from 'redux-persist/lib/storage'
 
 export const persistConfig = {
   key: 'root',
   storage,
-  whitelist: [sessionSlice.name, themeSlice.name], //debugModeSlice.name,
-  transforms: [SessionTransform],
+  whitelist: [sessionSlice.name, themeSlice.name], //debugModeSlice.name
 }

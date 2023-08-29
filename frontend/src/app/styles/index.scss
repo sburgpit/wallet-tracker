@@ -7,7 +7,12 @@
   padding: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
 }
 
@@ -20,6 +25,12 @@ body {
 a {
   color: var(--link-color);
   text-decoration: none;
+}
+
+button:focus,
+a:focus {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 @keyframes rotate {
