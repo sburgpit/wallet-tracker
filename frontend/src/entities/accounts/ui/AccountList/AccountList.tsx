@@ -16,7 +16,7 @@ export const AccountList = (props: AccountListProps) => {
     return (
       <div className='flex flex-column gap-m'>
         {new Array(10).fill(0).map((_, i) => (
-          <Shimmer height={60} width={200} key={i} />
+          <Shimmer height={50} width={'100%'} key={i} />
         ))}
       </div>
     )

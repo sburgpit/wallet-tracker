@@ -1,4 +1,4 @@
-import { getRouteAccount } from 'shared/config/routes'
+import { getRouteAccountDetails } from 'shared/config/routes'
 import { Account } from '../../model/types'
 import { Link } from 'react-router-dom'
 import { MdOutlineAccountBalanceWallet, MdOutlineAccountBalance } from 'react-icons/md'
@@ -8,7 +8,7 @@ import { Text } from 'shared/ui/Text'
 import { Currency } from 'types/payload-types'
 import css from './AccountCard.module.scss'
 import { useLongPress } from 'shared/lib/hooks'
-import { useCallback, useEffect } from 'react'
+import { useCallback } from 'react'
 
 type AccountCardProps = {
   account: Account
@@ -36,7 +36,7 @@ export const AccountCard = (props: AccountCardProps) => {
   )
 
   return (
-    <Link to={getRouteAccount(account.id)} className={css.AccountCard} {...actions} onClick={clickHandler}>
+    <Link to={getRouteAccountDetails(account.id)} className={css.AccountCard} {...actions} onClick={clickHandler}>
       {isPressing && (
         <div className={css.AccountCard__Pressing}>
           <div style={{ width: `${pressProgress}%` }} />

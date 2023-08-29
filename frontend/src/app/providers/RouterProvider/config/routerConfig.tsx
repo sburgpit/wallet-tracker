@@ -1,6 +1,10 @@
 import { Guard } from 'features/guard'
-import { AccountPage } from 'pages/account'
-import { AccountsPage } from 'pages/accounts'
+
+import { AccountDetailsPage } from 'pages/(account)/account-details'
+import { AccountListPage } from 'pages/(account)/account-list'
+import { CreateAccountPage } from 'pages/(account)/create-account'
+import { EditAccountPage } from 'pages/(account)/edit-account'
+
 import { DashboardPage } from 'pages/dashboard'
 import { ErrorPage } from 'pages/error'
 import { LoginPage } from 'pages/login'
@@ -11,9 +15,11 @@ import { SettingsPage } from 'pages/settings'
 import { RouteProps } from 'react-router-dom'
 import {
   Route,
-  getRouteAccount,
-  getRouteAccounts,
+  getRouteAccountDetails,
+  getRouteAccountList,
+  getRouteCreateAccount,
   getRouteDashboard,
+  getRouteEditAccount,
   getRouteForbidden,
   getRouteLogin,
   getRouteOperation,
@@ -32,16 +38,28 @@ export const routerConfig: Record<Route, RouteProps & { guards?: Guard[] }> = {
     element: <DashboardPage />,
     guards: ['Guest'],
   },
-  [Route.ACCOUNT]: {
-    path: getRouteAccount(':id'),
-    element: <AccountPage />,
+
+  [Route.ACCOUNT_LIST]: {
+    path: getRouteAccountList(),
+    element: <AccountListPage />,
     guards: ['Guest'],
   },
-  [Route.ACCOUNTS]: {
-    path: getRouteAccounts(),
-    element: <AccountsPage />,
+  [Route.ACCOUNT_DETAILS]: {
+    path: getRouteAccountDetails(':id'),
+    element: <AccountDetailsPage />,
     guards: ['Guest'],
   },
+  [Route.CREATE_ACCOUNT]: {
+    path: getRouteCreateAccount(),
+    element: <CreateAccountPage />,
+    guards: ['Guest'],
+  },
+  [Route.EDIT_ACCOUNT]: {
+    path: getRouteEditAccount(':id'),
+    element: <EditAccountPage />,
+    guards: ['Guest'],
+  },
+
   [Route.OPERATION]: {
     path: getRouteOperation(':id'),
     element: <OperationPage />,

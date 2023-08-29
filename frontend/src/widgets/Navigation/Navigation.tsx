@@ -3,19 +3,13 @@ import { useAppSelector } from 'shared/lib/hooks'
 import { LogoutButton } from 'features/auth/logout'
 import { CloseButton } from 'features/telegram/close'
 import css from './Navigation.module.scss'
-import {
-  getRouteAccounts,
-  getRouteDashboard,
-  getRouteMain,
-  getRouteOperations,
-  getRouteSettings,
-} from 'shared/config/routes'
+import { getRouteAccountList, getRouteMain, getRouteOperations, getRouteSettings } from 'shared/config/routes'
 import { Button } from 'shared/ui/Button'
 import { AiFillHome } from 'react-icons/ai'
 import { MdAccountBalanceWallet } from 'react-icons/md'
 import { BiTransferAlt } from 'react-icons/bi'
 import { IoMdSettings } from 'react-icons/io'
-import { memo, useEffect } from 'react'
+import { memo } from 'react'
 import { useLocation } from 'react-router-dom'
 
 export const Navigation = memo(() => {
@@ -24,7 +18,7 @@ export const Navigation = memo(() => {
 
   const links = [
     { path: getRouteMain(), icon: <AiFillHome /> },
-    { path: getRouteAccounts(), icon: <MdAccountBalanceWallet /> },
+    { path: getRouteAccountList(), icon: <MdAccountBalanceWallet /> },
     { path: getRouteOperations(), icon: <BiTransferAlt /> },
     { path: getRouteSettings(), icon: <IoMdSettings /> },
   ]
