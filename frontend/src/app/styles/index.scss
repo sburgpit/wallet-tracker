@@ -27,8 +27,8 @@ a {
   text-decoration: none;
 }
 
-button:focus,
-a:focus {
+button,
+a {
   outline: none;
   -webkit-tap-highlight-color: transparent;
 }
