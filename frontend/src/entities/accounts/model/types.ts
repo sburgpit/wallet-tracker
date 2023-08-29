@@ -1,5 +1,5 @@
 import { Doc } from 'types/payload-doc'
-import { Account as PayloadAccount } from 'types/payload-types'
+import { Account } from 'types/payload-types'
 
-export type Accounts = Doc<PayloadAccount>
-export type Account = PayloadAccount
+export type AccountList = Doc<Account>
+export type AccountDetails = Account

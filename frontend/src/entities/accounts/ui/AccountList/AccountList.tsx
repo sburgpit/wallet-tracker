@@ -1,11 +1,11 @@
 import { Text } from 'shared/ui/Text'
-import { Accounts } from '../../model/types'
+import type { AccountList as AccountListType } from '../../model/types'
 import { Button } from 'shared/ui/Button'
 import { Shimmer } from 'shared/ui/Shimmer'
 import { AccountCard } from '../AccountCard/AccountCard'
 
 type AccountListProps = {
-  accounts?: Accounts
+  accounts?: AccountListType
   isLoading: boolean
 }
 

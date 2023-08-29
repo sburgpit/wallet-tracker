@@ -6,7 +6,7 @@ type TextProps = {
   tag?: `h${1 | 2 | 3 | 4 | 5 | 6}` | 'p' | 'span'
   font?: 'primary' | 'second'
   weight?: 400 | 500 | 700
-  color?: 'primary' | 'link' | 'hint' | 'button' | 'dangerous' | 'warning'
+  color?: 'primary' | 'link' | 'hint' | 'button' | 'dangerous' | 'warning' | 'success'
   size?: 'large' | 'medium' | 'small' | 'title'
   style?: React.CSSProperties
   children?: React.ReactNode

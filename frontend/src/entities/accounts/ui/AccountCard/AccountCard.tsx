@@ -1,5 +1,5 @@
 import { getRouteAccountDetails } from 'shared/config/routes'
-import { Account } from '../../model/types'
+import { AccountDetails } from '../../model/types'
 import { Link } from 'react-router-dom'
 import { MdOutlineAccountBalanceWallet, MdOutlineAccountBalance } from 'react-icons/md'
 import { BsCreditCardFill } from 'react-icons/bs'
@@ -11,10 +11,10 @@ import { useLongPress } from 'shared/lib/hooks'
 import { useCallback } from 'react'
 
 type AccountCardProps = {
-  account: Account
+  account: AccountDetails
 }
 
-const accountIcons: Record<Account['type'], React.ReactNode> = {
+const accountIcons: Record<AccountDetails['type'], React.ReactNode> = {
   Cash: <MdOutlineAccountBalance />,
   Account: <MdOutlineAccountBalanceWallet />,
   Card: <BsCreditCardFill />,

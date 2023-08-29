@@ -19,14 +19,6 @@ export const useMainButton = (args: useMainButtonArgs) => {
   const { isShown = true, isDisabled = false, params, onClick } = args
 
   useEffect(() => {
-    if (isShown) MainButton.show()
-    if (isDisabled) MainButton.disable()
-    if (params)
-      MainButton.setParams({
-        color: params.color,
-        text: params.text,
-        text_color: params.textColor,
-      })
     if (onClick) MainButton.onClick(onClick)
 
     return () => {
@@ -34,6 +26,25 @@ export const useMainButton = (args: useMainButtonArgs) => {
       if (onClick) MainButton.offClick(onClick)
     }
   }, [])
+
+  useEffect(() => {
+    if (params)
+      MainButton.setParams({
+        color: params.color,
+        text: params.text,
+        text_color: params.textColor,
+      })
+  }, [params])
+
+  useEffect(() => {
+    if (isShown) MainButton.show()
+    else MainButton.hide()
+  }, [isShown, MainButton])
+
+  useEffect(() => {
+    if (isDisabled) MainButton.disable()
+    else MainButton.enable()
+  }, [isDisabled, MainButton])
 
   return MainButton
 }

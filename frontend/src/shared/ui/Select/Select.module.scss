@@ -1,0 +1,66 @@
+.Select {
+  position: relative;
+}
+
+.SelectButton {
+  height: 36px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--hint-color);
+  position: relative;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+}
+
+.SelectButton__Label {
+  color: var(--hint-color);
+}
+
+.SelectButton_isOpen {
+  .SelectButton__Indicator svg {
+    transform: rotate(-180deg);
+  }
+}
+
+.SelectButton__Indicator {
+  color: var(--hint-color);
+  position: absolute;
+  right: 18px;
+  top: 8px;
+
+  svg {
+    width: 12px;
+    height: 12px;
+    transition: transform 0.3s ease;
+  }
+}
+
+.SelectOptions {
+  position: absolute;
+  top: 80%;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--hint-color);
+  backdrop-filter: blur(5px);
+  background-color: rgba(25, 33, 44, 0.3);
+  z-index: 1;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: top 0.3s ease, opacity 0.3s ease, visibility 0s 0.3s;
+
+  &_isOpen {
+    top: calc(100% + 12px);
+    opacity: 1;
+    visibility: visible;
+    transition: top 0.3s ease, opacity 0.3s ease;
+  }
+}
+
+.SelectOptions__Item {
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--hint-color);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}

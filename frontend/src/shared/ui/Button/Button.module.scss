@@ -71,6 +71,11 @@
   color: var(--link-color);
 }
 
+.Button_color_hint {
+  background-color: var(--hint-color);
+  color: var(--button-text-color);
+}
+
 .Button_isActive.Button_color_second {
   background-color: var(--button-color);
 }

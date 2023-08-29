@@ -30,12 +30,16 @@
   color: var(--hint-color);
 }
 
+.Text_color_success {
+  color: var(--green);
+}
+
 .Text_color_dangerous {
-  color: red;
+  color: var(--red);
 }
 
 .Text_color_warning {
-  color: yellow;
+  color: var(--orange);
 }
 
 .Text_color_button {

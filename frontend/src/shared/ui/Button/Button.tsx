@@ -6,7 +6,7 @@ import { Link, LinkProps } from 'react-router-dom'
 type BaseButtonProps = {
   size?: 'large' | 'medium' | 'small'
   variant?: 'default'
-  color?: 'primary' | 'second' | 'transparent'
+  color?: 'primary' | 'second' | 'transparent' | 'hint'
   loading?: boolean
   icon?: React.ReactNode
   iconPosition?: 'left' | 'right'

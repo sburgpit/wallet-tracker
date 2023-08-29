@@ -2,7 +2,7 @@ import { Page } from 'widgets/Page'
 import { AccountList, useAccountsQuery } from 'entities/accounts'
 import { useAppSelector } from 'shared/lib/hooks'
 import { selectUserID } from 'entities/user/model/userSlice'
-import { Text } from 'shared/ui/Text'
+import { PageTitle } from 'shared/ui/Text'
 import { useMainButton } from 'entities/telegram'
 import { useNavigate } from 'react-router-dom'
 import { getRouteCreateAccount } from 'shared/config/routes'
@@ -15,12 +15,7 @@ const AccountListPage = () => {
   useMainButton({ params: { text: 'Create account' }, onClick: () => navigate(getRouteCreateAccount()) })
 
   return (
-    <Page
-      header={
-        <Text font='second' color='hint' weight={500}>
-          Accounts
-        </Text>
-      }>
+    <Page header={<PageTitle>Accounts</PageTitle>}>
       <AccountList accounts={data} isLoading={isFetching} />
     </Page>
   )
