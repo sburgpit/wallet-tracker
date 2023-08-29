@@ -44,10 +44,10 @@ export const useMainButton = (args: useMainButtonArgs) => {
   useEffect(() => {
     if (isDisabled) {
       MainButton.disable()
-      MainButton.setParams({ color: 'var(--hint-color)' })
+      MainButton.setParams({ color: '#708499' })
     } else {
       MainButton.enable()
-      MainButton.setParams({color: 'var(--button-color)'})
+      MainButton.setParams({color: '#5288c1'})
     }
   }, [isDisabled, MainButton])
 
