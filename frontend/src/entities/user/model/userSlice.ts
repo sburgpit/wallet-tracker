@@ -1,6 +1,6 @@
 import type { RootState } from 'app/store'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { User } from '..'
+import { User, userAPI } from '..'
 import { sessionAPI } from 'entities/session'
 
 type UserSliceState = {
@@ -22,9 +22,13 @@ export const userSlice = createSlice({
     builder.addMatcher(sessionAPI.endpoints.logout.matchPending, (state: UserSliceState) => {
       state.userData = null
     })
+    builder.addMatcher(userAPI.endpoints.me.matchFulfilled, (state: UserSliceState, { payload }) => {
+      state.userData = payload
+    })
   },
 })
 
 export const selectUserData = (state: RootState) => state.user.userData
+export const selectUserID = (state: RootState) => state.user.userData?.userID
 
 export const { setUserData } = userSlice.actions

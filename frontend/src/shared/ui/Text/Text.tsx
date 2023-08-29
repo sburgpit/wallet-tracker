@@ -6,7 +6,7 @@ type TextProps = {
   tag?: `h${1 | 2 | 3 | 4 | 5 | 6}` | 'p' | 'span'
   font?: 'primary' | 'second'
   weight?: 400 | 500 | 700
-  color?: 'default' | 'link' | 'hint' | 'dangerous' | 'warning'
+  color?: 'primary' | 'link' | 'hint' | 'button' | 'dangerous' | 'warning'
   size?: 'large' | 'medium' | 'small' | 'title'
   style?: React.CSSProperties
   children?: React.ReactNode
@@ -18,7 +18,7 @@ export const Text = (props: TextProps) => {
     tag = 'p',
     font = 'primary',
     weight = 400,
-    color = 'default',
+    color = 'primary',
     size = 'medium',
     style,
     children,

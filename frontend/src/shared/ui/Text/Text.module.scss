@@ -18,7 +18,7 @@
   font-weight: 700;
 }
 
-.Text_color_default {
+.Text_color_primary {
   color: var(--text-color);
 }
 
@@ -36,6 +36,10 @@
 
 .Text_color_warning {
   color: yellow;
+}
+
+.Text_color_button {
+  color: var(--button-color);
 }
 
 .Text_size_small {

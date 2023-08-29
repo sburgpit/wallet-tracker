@@ -36,7 +36,12 @@ export const Navigation = memo(() => {
       <nav className='flex gap-s'>
         {links.map(({ path, icon }) => {
           return (
-            <Button to={path} color='second' size='medium' isActive={path.split('/')[1] === pathname.split('/')[1]}>
+            <Button
+              to={path}
+              color='second'
+              size='medium'
+              isActive={path.split('/')[1] === pathname.split('/')[1]}
+              key={path}>
               {icon}
             </Button>
           )

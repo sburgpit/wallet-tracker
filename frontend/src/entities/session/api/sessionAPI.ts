@@ -1,6 +1,6 @@
 import { baseAPI, Tags } from 'shared/api'
 import type { Session } from '../model/types'
-import type { SessionDTO, RequestLoginBody, SessionExpireDTO } from './types'
+import type { SessionDTO, RequestLoginBody } from './types'
 import { mapSession } from '../lib/mapSession'
 
 export const sessionAPI = baseAPI.injectEndpoints({
@@ -28,12 +28,6 @@ export const sessionAPI = baseAPI.injectEndpoints({
       }),
       invalidatesTags: [Tags.SESSION],
       transformResponse: (response: SessionDTO) => mapSession(response),
-    }),
-    me: build.mutation<Session | null, void>({
-      query: () => `/users/me`,
-      invalidatesTags: [Tags.SESSION],
-      transformResponse: (response: SessionDTO | SessionExpireDTO) =>
-        response.user ? mapSession(response as SessionDTO) : null,
     }),
   }),
 })

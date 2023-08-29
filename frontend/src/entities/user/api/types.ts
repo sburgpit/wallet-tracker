@@ -1,7 +1,5 @@
+import { User } from 'types/payload-types'
+
 export type UserDTO = {
-  id: string
-  email: string
-  telegramID: string
-  createdAt: string
-  updatedAt: string
-} | null
+  user: User
+}

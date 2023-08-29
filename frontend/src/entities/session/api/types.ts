@@ -1,7 +1,3 @@
-export type SessionExpireDTO = {
-  user: null
-}
-
 export type SessionDTO = {
   user: {
     id: string
