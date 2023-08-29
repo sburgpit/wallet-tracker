@@ -4,8 +4,7 @@ import { SessionSliceState } from './sessionSlice'
 
 export const SessionTransform = createTransform<SessionSliceState, Omit<SessionSliceState, 'isInited'>>(
   (inboundState) => {
-    // eslint-disable-next-line
-    const { isInited, ...stateToPersist } = inboundState
+    const { ...stateToPersist } = inboundState
     return stateToPersist
   },
 
@@ -13,7 +12,6 @@ export const SessionTransform = createTransform<SessionSliceState, Omit<SessionS
     return {
       ...outboundState,
       isAuth: outboundState.isAuth as false,
-      isInited: false,
     }
   },
   { whitelist: [sessionSlice.name] }
