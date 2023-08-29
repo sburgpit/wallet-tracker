@@ -2,6 +2,7 @@ import express from 'express'
 import payload from 'payload'
 import TelegramService from './services/telegram.service'
 import CurrencyService from './services/currency.service'
+import CMCService from './services/cmc.service'
 
 require('dotenv').config()
 const app = express()
@@ -19,8 +20,9 @@ const start = async () => {
       payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`)
       if (process.env.NODE_ENV === 'production') {
         new TelegramService()
-        new CurrencyService()
       }
+
+      // new CMCService().getFiatData()
     },
   })
 

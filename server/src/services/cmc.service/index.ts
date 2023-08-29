@@ -4,15 +4,15 @@ class CMCService {
   constructor() {}
 
   async getFiatData() {
-    // const response = await fetch(`${process.env.CMC_PRO_API_URL}/v1/fiat/map`, {
-    //   headers: {
-    //     'X-CMC_PRO_API_KEY': process.env.CMC_PRO_API_KEY,
-    //   },
-    // })
-    // const json = await response.json()
-    // console.log(json)
-    // fs.writeFileSync('crypto-currencies.json', JSON.stringify(json))
-    // return json
+    const response = await fetch(`${process.env.CMC_PRO_API_URL}/v1/fiat/map`, {
+      headers: {
+        'X-CMC_PRO_API_KEY': process.env.CMC_PRO_API_KEY,
+      },
+    })
+    const json = await response.json()
+    console.log(json)
+    fs.writeFileSync('crypto-currencies.json', JSON.stringify(json))
+    return json
   }
 
   async getCryptoData(symbols: string[]) {
