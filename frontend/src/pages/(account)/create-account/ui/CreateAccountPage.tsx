@@ -15,10 +15,9 @@ const CreateAccountPage = () => {
   useMainButton({ params: { text: 'Create' }, isDisabled, onClick: createAccountHandler })
 
   const accountTypes = ['Card', 'Account', 'Crypto', 'Cash']
-  
+
   return (
     <Page header={<PageTitle>Account Creation</PageTitle>}>
-      <Button onClick={() => setIsDisabled((prev) => !prev)}>TOGGLE MAIN BUTTON</Button>
       <form className='flex flex-column gap-l'>
         <Select options={accountTypes} label='Type' />
         <Select

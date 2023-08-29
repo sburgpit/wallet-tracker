@@ -42,8 +42,13 @@ export const useMainButton = (args: useMainButtonArgs) => {
   }, [isShown, MainButton])
 
   useEffect(() => {
-    if (isDisabled) MainButton.disable()
-    else MainButton.enable()
+    if (isDisabled) {
+      MainButton.disable()
+      MainButton.setParams({ color: 'var(--hint-color)' })
+    } else {
+      MainButton.enable()
+      MainButton.setParams({color: 'var(--button-color)'})
+    }
   }, [isDisabled, MainButton])
 
   return MainButton
