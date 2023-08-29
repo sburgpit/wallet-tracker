@@ -2,8 +2,10 @@ export enum Route {
   MAIN = 'main',
   SETTINGS = 'settings',
   DASHBOARD = 'dashboard',
+
   OPERATION = 'operation',
   OPERATIONS = 'operations',
+  CREATE_OPERATION = 'create-operation',
 
   ACCOUNT_LIST = 'account-list',
   ACCOUNT_DETAILS = 'account-details',
@@ -18,8 +20,10 @@ export enum Route {
 export const getRouteMain = () => '/'
 export const getRouteSettings = () => '/settings'
 export const getRouteDashboard = () => '/dashboard'
+
 export const getRouteOperations = () => '/operations'
-export const getRouteOperation = (id: string) => `/operation/${id}`
+export const getRouteOperation = (id: string) => `/operation-details/${id}`
+export const getRouteCreateOperation = () => `/operation/create`
 
 export const getRouteAccountList = () => `/account-list`
 export const getRouteAccountDetails = (id: string) => `/account-details/${id}`
@@ -33,8 +37,10 @@ export const RouteByPathPattern: Record<string, Route> = {
   [getRouteMain()]: Route.MAIN,
   [getRouteSettings()]: Route.SETTINGS,
   [getRouteDashboard()]: Route.DASHBOARD,
+
   [getRouteOperation(':id')]: Route.OPERATION,
   [getRouteOperations()]: Route.OPERATIONS,
+  [getRouteCreateOperation()]: Route.CREATE_OPERATION,
 
   [getRouteAccountList()]: Route.ACCOUNT_LIST,
   [getRouteAccountDetails(':id')]: Route.ACCOUNT_DETAILS,

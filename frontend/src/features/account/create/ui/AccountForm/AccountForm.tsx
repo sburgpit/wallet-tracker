@@ -1,6 +1,6 @@
 import { useCurrenciesQuery } from 'entities/currency'
-import { useMainButton } from 'entities/telegram'
-import { useCallback, useEffect, useState } from 'react'
+import { useMainButton, useTelegram } from 'entities/telegram'
+import { useCallback, useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Button } from 'shared/ui/Button'
 import { Input } from 'shared/ui/Input'
@@ -19,8 +19,13 @@ type AccountFormProps = {
 
 export const AccountForm = (props: AccountFormProps) => {
   const { onComplete } = props
+  const { expandApp } = useTelegram()
   const dispatch = useAppDispatch()
   const { data, isFetching } = useCurrenciesQuery()
+
+  useEffect(() => {
+    expandApp()
+  }, [])
 
   const defaultValues = { owner: useAppSelector(selectUserID) }
 
@@ -46,10 +51,6 @@ export const AccountForm = (props: AccountFormProps) => {
     },
     [dispatch, onComplete, setError]
   )
-
-  useEffect(() => {
-    console.log(errors)
-  }, [errors])
 
   useMainButton({ params: { text: 'Create' }, onClick: handleSubmit(onSumbitHandler) })
 
@@ -95,7 +96,6 @@ export const AccountForm = (props: AccountFormProps) => {
           <Input label='Name' error={errors.name?.message} onChange={field.onChange} disabled={isSubmitting} />
         )}
       />
-
       <Controller
         name='balance'
         control={control}
@@ -111,7 +111,6 @@ export const AccountForm = (props: AccountFormProps) => {
           />
         )}
       />
-
       <Controller
         name='includeToBalance'
         control={control}
@@ -126,7 +125,6 @@ export const AccountForm = (props: AccountFormProps) => {
           />
         )}
       />
-
       <Controller
         name='isSavings'
         control={control}
@@ -141,7 +139,6 @@ export const AccountForm = (props: AccountFormProps) => {
           />
         )}
       />
-
       <Controller
         name='isArchived'
         control={control}
@@ -156,10 +153,8 @@ export const AccountForm = (props: AccountFormProps) => {
           />
         )}
       />
-
       {errors.root && <ErrorText>{errors.root.message}</ErrorText>}
-
-      <Button onClick={handleSubmit(onSumbitHandler)}>Send</Button>
+      {<Button onClick={handleSubmit(onSumbitHandler)}>Create</Button>}
     </form>
   )
 }

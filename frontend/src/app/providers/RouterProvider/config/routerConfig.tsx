@@ -5,6 +5,8 @@ import { AccountListPage } from 'pages/(account)/account-list'
 import { CreateAccountPage } from 'pages/(account)/create-account'
 import { EditAccountPage } from 'pages/(account)/edit-account'
 
+import { CreateOperationPage } from 'pages/(operation)/create-operation'
+
 import { DashboardPage } from 'pages/dashboard'
 import { ErrorPage } from 'pages/error'
 import { LoginPage } from 'pages/login'
@@ -18,6 +20,7 @@ import {
   getRouteAccountDetails,
   getRouteAccountList,
   getRouteCreateAccount,
+  getRouteCreateOperation,
   getRouteDashboard,
   getRouteEditAccount,
   getRouteForbidden,
@@ -70,6 +73,12 @@ export const routerConfig: Record<Route, RouteProps & { guards?: Guard[] }> = {
     element: <OperationsPage />,
     guards: ['Guest'],
   },
+  [Route.CREATE_OPERATION]: {
+    path: getRouteCreateOperation(),
+    element: <CreateOperationPage />,
+    guards: ['Guest'],
+  },
+
   [Route.SETTINGS]: {
     path: getRouteSettings(),
     element: <SettingsPage />,
