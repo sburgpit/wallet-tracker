@@ -11,7 +11,7 @@ export const LogoutButton = () => {
   }
 
   return (
-    <Button onClick={onConfirmLogout} size='small' color='second' icon={<BiLogOut />} iconPosition='left'>
+    <Button onClick={onConfirmLogout} size='medium' color='second' icon={<BiLogOut />} iconPosition='left'>
       Log Out
     </Button>
   )

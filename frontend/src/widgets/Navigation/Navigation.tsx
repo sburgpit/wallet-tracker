@@ -33,21 +33,17 @@ export const Navigation = memo(() => {
         {links.map(({ path, icon }) => {
           const isActive = path.split('/')[1] === pathname.split('/')[1]
           return (
-            <Button
-              to={path}
-              color='second'
-              size='small'
-              isActive={isActive}
-              key={path}
-              icon={icon}
-              iconPosition='left'
-            />
+            <Button to={path} color='second' size='medium' isActive={isActive} key={path}>
+              {icon}
+            </Button>
           )
         })}
       </nav>
       <Dropdown
         trigger={(isOpen) => (
-          <Button color={isOpen ? 'primary' : 'second'} size='small' icon={<SlOptionsVertical />} />
+          <Button color={isOpen ? 'primary' : 'second'} size='medium'>
+            <SlOptionsVertical />
+          </Button>
         )}>
         <div className='flex flex-column gap-xs'>
           <LogoutButton />

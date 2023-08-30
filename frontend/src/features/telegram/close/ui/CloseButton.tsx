@@ -6,7 +6,7 @@ export const CloseButton = () => {
   const { closeApp } = useTelegram()
 
   return (
-    <Button icon={<CgClose />} onClick={closeApp} size='small' color='second' iconPosition='left'>
+    <Button icon={<CgClose />} onClick={closeApp} size='medium' color='second' iconPosition='left'>
       Close App
     </Button>
   )

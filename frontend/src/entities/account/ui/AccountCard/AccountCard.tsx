@@ -2,7 +2,7 @@ import { getRouteAccountDetails } from 'shared/config/routes'
 import { AccountDetails } from '../../model/types'
 import { Link } from 'react-router-dom'
 import { MdOutlineAccountBalanceWallet, MdOutlineAccountBalance, MdEdit } from 'react-icons/md'
-import { BsCreditCardFill, BsTrash } from 'react-icons/bs'
+import { BsCreditCardFill } from 'react-icons/bs'
 import { RiBitCoinLine } from 'react-icons/ri'
 import { FiTrash2 } from 'react-icons/fi'
 import { Text } from 'shared/ui/Text'
@@ -13,7 +13,8 @@ import { useCallback, useRef, useState } from 'react'
 import { Button } from 'shared/ui/Button'
 import { cn } from 'shared/lib/utils/classNames'
 import { useTelegram } from 'entities/telegram'
-import { removeAccount } from 'features/account/remove'
+import { removeAccount } from 'features/account/remove' // @todo forbidden use fetures in entities
+import { useSwipeable } from 'react-swipeable'
 
 type AccountCardProps = {
   account: AccountDetails
@@ -31,20 +32,15 @@ export const AccountCard = (props: AccountCardProps) => {
   const { showConfirm, showAlert } = useTelegram()
   const { account } = props
   const [showSettings, setShowSettings] = useState<boolean>(false)
-  const { actions, isPressing, pressProgress, shouldPreventDefault } = useLongPress({
-    delay: 600,
-    onLongPress: () => setShowSettings(true),
-  })
-  const cardRef = useRef<HTMLAnchorElement | null>(null)
 
-  useOnClickOutside(cardRef, () => setShowSettings(false))
-
-  const linkPressHandler = useCallback(
-    (event: React.MouseEvent) => {
-      if (shouldPreventDefault) event.preventDefault()
+  const { ref: cardRef, onMouseDown } = useSwipeable({
+    onSwipedLeft: (event) => {
+      setShowSettings(true)
     },
-    [shouldPreventDefault]
-  )
+    onSwipedRight: (event) => {
+      setShowSettings(false)
+    },
+  })
 
   const removeAccountHandler = async () => {
     const result = await showConfirm(`Are you sure you want to DELETE the ${account.name} account?`)
@@ -63,10 +59,9 @@ export const AccountCard = (props: AccountCardProps) => {
   return (
     <Link
       to={getRouteAccountDetails(account.id)}
-      className={css.AccountCard}
-      {...actions}
-      onClick={linkPressHandler}
-      ref={cardRef}>
+      className={cn(css.AccountCard, { [css.AccountCard_settingsIsShown]: showSettings })}
+      ref={cardRef}
+      onMouseDown={onMouseDown}>
       <div className={css.AccountCard__Info}>
         <div className='flex align-center gap-m'>
           {accountIcons[account.type]}
@@ -77,29 +72,19 @@ export const AccountCard = (props: AccountCardProps) => {
           <Text color='hint'>{(account.currency as Currency).sign}</Text>
         </div>
       </div>
-      {showSettings && (
-        <div
-          className={css.AccountCard__Settings}
-          onClick={(e) => {
-            e.preventDefault()
-            e.stopPropagation()
-          }}>
-          <Button size='small' color='primary'>
-            <MdEdit />
-          </Button>
-          <Button size='small' color='dangerous' onClick={removeAccountHandler}>
-            <FiTrash2 />
-          </Button>
-        </div>
-      )}
-      {
-        <div
-          className={cn(css.AccountCard__Pressing, {
-            [css.AccountCard__Pressing_show]: isPressing && pressProgress < 100,
-          })}>
-          <div style={{ width: `${pressProgress}%` }} />
-        </div>
-      }
+      <div
+        className={cn(css.AccountCard__Settings, { [css.AccountCard__Settings_shown]: showSettings })}
+        onClick={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+        }}>
+        <button type='button' className={css.AccountCard__Settings__Button}>
+          <MdEdit />
+        </button>
+        <button type='button' className={css.AccountCard__Settings__Button} onClick={removeAccountHandler}>
+          <FiTrash2 />
+        </button>
+      </div>
     </Link>
   )
 }
