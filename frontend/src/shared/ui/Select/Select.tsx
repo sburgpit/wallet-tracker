@@ -50,10 +50,7 @@ export const Select = (props: SelectProps) => {
         setMaxHeight(availableSpace)
       }
 
-      if (searchInputRef?.current && searchable) {
-        searchInputRef.current.focus()
-        searchInputRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      }
+      if (searchInputRef?.current && searchable) searchInputRef.current.focus()
     } else {
       setTimeout(() => {
         setSearch('')
@@ -134,6 +131,9 @@ export const Select = (props: SelectProps) => {
               className={css.SelectButton__Search}
               onClick={(e) => e.stopPropagation()}
               ref={searchInputRef}
+              onFocus={(event) => {
+                event.currentTarget.scrollIntoView({ block: 'start' })
+              }}
             />
           )}
         </div>
