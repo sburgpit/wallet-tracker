@@ -45,7 +45,9 @@ export const AccountCard = (props: AccountCardProps) => {
     [shouldPreventDefault]
   )
 
-  const removeAccountHandler = async () => {
+  const removeAccountHandler = async (e: React.MouseEvent) => {
+    e.stopPropagation()
+    e.preventDefault()
     const result = await showConfirm(`Are you sure you want to DELETE the ${account.name} account?`)
     console.log(result)
   }
