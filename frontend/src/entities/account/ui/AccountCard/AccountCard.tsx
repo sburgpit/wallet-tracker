@@ -45,9 +45,8 @@ export const AccountCard = (props: AccountCardProps) => {
     [shouldPreventDefault]
   )
 
-  const removeAccountHandler = async (e: React.MouseEvent) => {
-    e.stopPropagation()
-    e.preventDefault()
+  const removeAccountHandler = async () => {
+    console.log('click')
     const result = await showConfirm(`Are you sure you want to DELETE the ${account.name} account?`)
     console.log(result)
   }
@@ -70,11 +69,16 @@ export const AccountCard = (props: AccountCardProps) => {
         </div>
       </div>
       {showSettings && (
-        <div className={css.AccountCard__Settings}>
-          <Button size='small' color='primary' onClick={removeAccountHandler}>
+        <div
+          className={css.AccountCard__Settings}
+          onClick={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+          }}>
+          <Button size='small' color='primary'>
             <MdEdit />
           </Button>
-          <Button size='small' color='dangerous'>
+          <Button size='small' color='dangerous' onClick={removeAccountHandler}>
             <FiTrash2 />
           </Button>
         </div>
