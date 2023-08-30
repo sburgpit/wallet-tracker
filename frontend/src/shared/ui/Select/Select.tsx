@@ -132,7 +132,7 @@ export const Select = (props: SelectProps) => {
               onClick={(e) => e.stopPropagation()}
               ref={searchInputRef}
               onFocus={(event) => {
-                event.currentTarget.scrollIntoView({ block: 'start' })
+                event.currentTarget.scrollIntoView({ block: 'end' })
               }}
             />
           )}
