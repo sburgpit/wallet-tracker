@@ -16,7 +16,7 @@ export const useTelegram = () => {
     onEvent: telegram.onEvent,
     offEvent: telegram.offEvent,
     showAlert: telegram.showAlert,
-    showConfirm: promisify(telegram.showConfirm),
+    showConfirm: promisify<[string], boolean>(telegram.showConfirm),
     viewportheight: telegram.viewportHeight,
   }
 }

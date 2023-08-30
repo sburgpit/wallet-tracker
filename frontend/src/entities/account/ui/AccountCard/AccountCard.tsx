@@ -13,6 +13,7 @@ import { useCallback, useRef, useState } from 'react'
 import { Button } from 'shared/ui/Button'
 import { cn } from 'shared/lib/utils/classNames'
 import { useTelegram } from 'entities/telegram'
+import { removeAccount } from 'features/account/remove'
 
 type AccountCardProps = {
   account: AccountDetails
@@ -27,7 +28,7 @@ const accountIcons: Record<AccountDetails['type'], React.ReactNode> = {
 
 export const AccountCard = (props: AccountCardProps) => {
   const dispatch = useAppDispatch()
-  const { showConfirm } = useTelegram()
+  const { showConfirm, showAlert } = useTelegram()
   const { account } = props
   const [showSettings, setShowSettings] = useState<boolean>(false)
   const { actions, isPressing, pressProgress, shouldPreventDefault } = useLongPress({
@@ -46,9 +47,17 @@ export const AccountCard = (props: AccountCardProps) => {
   )
 
   const removeAccountHandler = async () => {
-    console.log('click')
     const result = await showConfirm(`Are you sure you want to DELETE the ${account.name} account?`)
-    console.log(result)
+    if (!result) return
+
+    try {
+      const result = await dispatch(removeAccount(account.id))
+      showAlert(`${account.name} account has been successfully deleted`)
+      console.log(result)
+    } catch (e) {
+      console.error(e)
+      throw e
+    }
   }
 
   return (

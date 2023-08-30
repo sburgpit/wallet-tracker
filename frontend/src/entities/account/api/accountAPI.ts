@@ -24,6 +24,7 @@ export const accountAPI = baseAPI.injectEndpoints({
         url: `/accounts/${accountID}`,
         method: 'DELETE',
       }),
+      invalidatesTags: [Tags.ACCOUNT],
     }),
   }),
 })
