@@ -5,12 +5,10 @@ import css from './DefaultLayout.module.scss'
 export const DefaultLayout = () => {
   return (
     <div className={css.DefaultLayout}>
+      <Navigation />
       <main className={css.DefaultLayout__Main}>
         <Outlet />
       </main>
-      <menu className={css.DefaultLayout__Menu}>
-        <Navigation />
-      </menu>
     </div>
   )
 }

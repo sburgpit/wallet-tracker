@@ -14,9 +14,9 @@ export const AccountList = (props: AccountListProps) => {
 
   if (isLoading) {
     return (
-      <div className='flex flex-column gap-m'>
+      <div className='flex flex-column gap-s'>
         {new Array(10).fill(0).map((_, i) => (
-          <Shimmer height={50} width={'100%'} key={i} />
+          <Shimmer height={46} width={'100%'} key={i} />
         ))}
       </div>
     )
@@ -24,7 +24,7 @@ export const AccountList = (props: AccountListProps) => {
 
   if (!accounts || !accounts.docs.length) {
     return (
-      <div className='flex flex-column gap-m align-center'>
+      <div className='flex flex-column gap-s align-center'>
         <Text>You don't have any accounts</Text>
         <Button size='small'>Create account</Button>
       </div>
@@ -32,7 +32,7 @@ export const AccountList = (props: AccountListProps) => {
   }
 
   return (
-    <div className='flex flex-column gap-m align-center'>
+  <div className='flex flex-column gap-s align-center'>
       {accounts.docs.map((account) => (
         <AccountCard account={account} key={account.id} />
       ))}

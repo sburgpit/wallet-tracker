@@ -1,4 +1,4 @@
-import { useAccountsQuery } from 'entities/accounts'
+import { useAccountsQuery } from 'entities/account'
 import { selectUserID } from 'entities/user'
 import { useAppSelector } from 'shared/lib/hooks'
 import { Shimmer } from 'shared/ui/Shimmer'

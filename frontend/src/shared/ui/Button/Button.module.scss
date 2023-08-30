@@ -4,7 +4,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
   flex-shrink: 0;
   border: none;
 
@@ -27,6 +26,7 @@
   height: 26px;
   padding: 0 10px;
   font-size: var(--font-size-small);
+  gap: 6px;
 
   svg {
     width: 14px;
@@ -38,6 +38,7 @@
   height: 36px;
   padding: 0 12px;
   font-size: var(--font-size-medium);
+  gap: 8px;
 
   svg {
     width: 18px;
@@ -49,6 +50,7 @@
   height: 48px;
   padding: 0 24px;
   font-size: var(--font-size-large);
+  gap: 10px;
 
   svg {
     width: 24px;
@@ -74,6 +76,11 @@
 .Button_color_hint {
   background-color: var(--hint-color);
   color: var(--button-text-color);
+}
+
+.Button_color_dangerous {
+  background-color: var(--red);
+  color: #ffffff;
 }
 
 .Button_isActive.Button_color_second {

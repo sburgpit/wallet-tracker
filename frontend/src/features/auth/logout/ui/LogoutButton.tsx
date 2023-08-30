@@ -11,8 +11,8 @@ export const LogoutButton = () => {
   }
 
   return (
-    <Button onClick={onConfirmLogout} size='medium' color='second'>
-      <BiLogOut />
+    <Button onClick={onConfirmLogout} size='small' color='second' icon={<BiLogOut />} iconPosition='left'>
+      Log Out
     </Button>
   )
 }

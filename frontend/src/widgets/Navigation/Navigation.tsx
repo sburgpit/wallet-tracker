@@ -1,16 +1,18 @@
+import { memo } from 'react'
 import { selectIsAuth } from 'entities/session'
 import { useAppSelector } from 'shared/lib/hooks'
 import { LogoutButton } from 'features/auth/logout'
 import { CloseButton } from 'features/telegram/close'
-import css from './Navigation.module.scss'
 import { getRouteAccountList, getRouteMain, getRouteOperations, getRouteSettings } from 'shared/config/routes'
 import { Button } from 'shared/ui/Button'
 import { AiFillHome } from 'react-icons/ai'
 import { MdAccountBalanceWallet } from 'react-icons/md'
 import { BiTransferAlt } from 'react-icons/bi'
 import { IoMdSettings } from 'react-icons/io'
-import { memo } from 'react'
+import { SlOptionsVertical } from 'react-icons/sl'
 import { useLocation } from 'react-router-dom'
+import { Dropdown } from 'shared/ui/Dropdown'
+import css from './Navigation.module.scss'
 
 export const Navigation = memo(() => {
   const { pathname } = useLocation()
@@ -26,25 +28,32 @@ export const Navigation = memo(() => {
   if (!isAuthorized) return null
 
   return (
-    <div className={css.Navigation}>
-      <nav className='flex gap-s'>
+    <header className={css.Navigation}>
+      <nav className='flex gap-xs'>
         {links.map(({ path, icon }) => {
+          const isActive = path.split('/')[1] === pathname.split('/')[1]
           return (
             <Button
               to={path}
               color='second'
-              size='medium'
-              isActive={path.split('/')[1] === pathname.split('/')[1]}
-              key={path}>
-              {icon}
-            </Button>
+              size='small'
+              isActive={isActive}
+              key={path}
+              icon={icon}
+              iconPosition='left'
+            />
           )
         })}
       </nav>
-      <div className='flex align-center gap-s'>
-        <LogoutButton />
-        <CloseButton />
-      </div>
-    </div>
+      <Dropdown
+        trigger={(isOpen) => (
+          <Button color={isOpen ? 'primary' : 'second'} size='small' icon={<SlOptionsVertical />} />
+        )}>
+        <div className='flex flex-column gap-xs'>
+          <LogoutButton />
+          <CloseButton />
+        </div>
+      </Dropdown>
+    </header>
   )
 })

@@ -9,6 +9,7 @@ export const accountAPI = baseAPI.injectEndpoints({
       query: (userID) => ({
         url: `/accounts?${qs.stringify({ limit: 100, where: { owner: { equals: userID } } })}`,
       }),
+      providesTags: [Tags.ACCOUNT],
     }),
     create: build.mutation<unknown, RequestCreateAccountBody>({
       query: (body) => ({
@@ -17,6 +18,12 @@ export const accountAPI = baseAPI.injectEndpoints({
         body,
       }),
       invalidatesTags: [Tags.ACCOUNT],
+    }),
+    deleteByID: build.mutation<unknown, string>({
+      query: (accountID) => ({
+        url: `/accounts/${accountID}`,
+        method: 'DELETE',
+      }),
     }),
   }),
 })

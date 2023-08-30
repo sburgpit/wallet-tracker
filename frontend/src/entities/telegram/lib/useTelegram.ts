@@ -1,3 +1,4 @@
+import { promisify } from 'shared/lib/utils/promisify'
 const telegram = Telegram.WebApp
 
 export const useTelegram = () => {
@@ -15,6 +16,7 @@ export const useTelegram = () => {
     onEvent: telegram.onEvent,
     offEvent: telegram.offEvent,
     showAlert: telegram.showAlert,
+    showConfirm: promisify(telegram.showConfirm),
     viewportheight: telegram.viewportHeight,
   }
 }

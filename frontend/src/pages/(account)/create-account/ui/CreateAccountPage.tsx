@@ -2,7 +2,6 @@ import { useTelegram } from 'entities/telegram'
 import { AccountForm } from 'features/account/create'
 import { useNavigate } from 'react-router-dom'
 import { getRouteAccountList } from 'shared/config/routes'
-import { PageTitle } from 'shared/ui/Text'
 import { Page } from 'widgets/Page'
 
 const CreateAccountPage = () => {
@@ -15,7 +14,7 @@ const CreateAccountPage = () => {
   }
 
   return (
-    <Page header={<PageTitle>Account Creation</PageTitle>}>
+    <Page>
       <AccountForm onComplete={onComplete} />
     </Page>
   )

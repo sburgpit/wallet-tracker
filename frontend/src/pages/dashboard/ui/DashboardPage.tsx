@@ -1,8 +1,7 @@
-import { Balance } from 'entities/accounts'
+import { Balance } from 'entities/account'
 import { useMainButton } from 'entities/telegram'
 import { useNavigate } from 'react-router-dom'
 import { getRouteCreateOperation } from 'shared/config/routes'
-import { PageTitle } from 'shared/ui/Text'
 import { Page } from 'widgets/Page'
 
 const DashboardPage = () => {
@@ -15,8 +14,7 @@ const DashboardPage = () => {
   })
 
   return (
-    <Page header={<PageTitle>Dashboard</PageTitle>}>
-      <br />
+    <Page>
       <Balance />
     </Page>
   )

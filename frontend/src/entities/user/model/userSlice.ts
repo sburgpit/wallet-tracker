@@ -1,6 +1,7 @@
 import type { RootState } from 'app/store'
+import type { User } from './types'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { User, userAPI } from '..'
+import { userAPI } from '../api/userAPI'
 import { sessionAPI } from 'entities/session'
 
 type UserSliceState = {

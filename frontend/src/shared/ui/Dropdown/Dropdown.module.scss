@@ -1,0 +1,32 @@
+.Dropdown {
+  position: relative;
+}
+
+.Dropdown_isOpen {
+  .Dropdown__Droped {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.2s ease;
+  }
+}
+
+.Dropdown__Droped {
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  z-index: var(--dropdown-z-index);
+  transition: opacity 0.2s ease, visibility 0s 0.2s;
+  top: calc(100% + 6px);
+  left: 0;
+  width: max-content;
+
+  &_position_above {
+    top: auto;
+    bottom: calc(100% + 6px);
+  }
+
+  &_position_left {
+    left: auto;
+    right: 0;
+  }
+}

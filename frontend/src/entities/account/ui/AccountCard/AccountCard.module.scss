@@ -1,0 +1,52 @@
+.AccountCard {
+  position: relative;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--hint-color);
+  width: 100%;
+  height: 46px;
+  display: flex;
+}
+
+.AccountCard__Pressing {
+  position: absolute;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+
+  div {
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: width 0.1s linear;
+  }
+
+  &_show {
+    opacity: 1;
+  }
+}
+
+.AccountCard__Info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  transition: flex-basis 0.3s ease;
+  padding: 12px 20px;
+
+  svg {
+    color: var(--hint-color);
+  }
+}
+
+.AccountCard__Settings {
+  border-left: 1px solid var(--hint-color);
+  padding: 0 20px 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}

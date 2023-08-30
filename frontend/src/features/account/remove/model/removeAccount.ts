@@ -1,13 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { isFetchBaseQueryError, isServerError } from 'shared/api'
-import { AccountFormSchema } from './accountFormSchema'
 import { accountAPI } from 'entities/account'
 
-export const createAccount = createAsyncThunk<void, AccountFormSchema>(
-  'account/create',
-  async (body: AccountFormSchema, { dispatch }) => {
+export const removeAccount = createAsyncThunk<void, string>(
+  'account/remove',
+  async (accountID: string, { dispatch }) => {
     try {
-      await dispatch(accountAPI.endpoints.create.initiate(body)).unwrap()
+      await dispatch(accountAPI.endpoints.deleteByID.initiate(accountID)).unwrap()
     } catch (e) {
       console.log(e)
       if (isServerError(e) && e.data) {

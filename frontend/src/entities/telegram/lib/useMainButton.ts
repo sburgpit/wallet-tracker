@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useTelegram } from '..'
+import { useTelegram } from './useTelegram'
 
 type useMainButtonArgs = {
   isShown?: boolean
@@ -47,7 +47,7 @@ export const useMainButton = (args: useMainButtonArgs) => {
       MainButton.setParams({ color: '#708499' })
     } else {
       MainButton.enable()
-      MainButton.setParams({color: '#5288c1'})
+      MainButton.setParams({ color: '#5288c1' })
     }
   }, [isDisabled, MainButton])
 

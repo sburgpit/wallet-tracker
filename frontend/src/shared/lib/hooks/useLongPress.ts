@@ -7,7 +7,7 @@ type UseLongPressOptions = {
 
 const SAFE_PRESS_TIME = 200
 
-export const useLongPress = (options: UseLongPressOptions) => {
+export const useLongPress = ({ delay, onLongPress }: UseLongPressOptions) => {
   const [shouldPreventDefault, setShouldPreventDefault] = useState(false)
   const [isPressing, setIsPressing] = useState(false)
   const [pressProgress, setPressProgress] = useState(0)
@@ -15,13 +15,13 @@ export const useLongPress = (options: UseLongPressOptions) => {
   const startTimeRef = useRef<number | null>(null)
   const pressSafetyTimer = useRef<number | null>(null)
 
-  const updatePressProgress = () => {
+  const updatePressProgress = useCallback(() => {
     if (startTimeRef.current !== null) {
       const elapsedTime = Date.now() - startTimeRef.current
-      const progress = (elapsedTime / (options.delay || 1000)) * 100
+      const progress = (elapsedTime / (delay || 1000)) * 100
       setPressProgress(Math.min(progress, 100))
     }
-  }
+  }, [startTimeRef, delay])
 
   const startPress = useCallback(() => {
     pressSafetyTimer.current = setTimeout(() => {
@@ -29,11 +29,13 @@ export const useLongPress = (options: UseLongPressOptions) => {
       startTimeRef.current = Date.now()
       pressTimer.current = setInterval(updatePressProgress, 30)
 
-      setTimeout(() => {
-        options.onLongPress?.()
-      }, options.delay || 1000)
+      const onLongPressTimer = setTimeout(() => {
+        onLongPress?.()
+      }, delay || 1000)
+
+      pressSafetyTimer.current = onLongPressTimer
     }, SAFE_PRESS_TIME)
-  }, [options])
+  }, [delay, onLongPress, updatePressProgress])
 
   const stopPress = useCallback(() => {
     if (pressSafetyTimer.current !== null) {
