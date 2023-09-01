@@ -41,9 +41,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           placeholder={placeholder || ''}
           onChange={changeHandler}
           onFocus={(event) => {
-            setTimeout(() => {
-              event.currentTarget.scrollIntoView({ block: 'end' })
-            }, 300)
             other.onFocus?.(event)
           }}
           {...other}

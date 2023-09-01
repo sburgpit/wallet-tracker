@@ -55,7 +55,7 @@ export interface Account {
 }
 export interface Bank {
   id: string;
-  name?: string;
+  name: string;
   owner: string | User;
   updatedAt: string;
   createdAt: string;

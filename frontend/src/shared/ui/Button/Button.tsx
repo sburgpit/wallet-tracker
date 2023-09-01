@@ -3,10 +3,14 @@ import css from './Button.module.scss'
 import { Loader } from '../Loader'
 import { Link, LinkProps } from 'react-router-dom'
 
+export type ButtonColors = 'primary' | 'second' | 'transparent' | 'hint' | 'dangerous'
+export type ButtonVariants = 'default'
+export type ButtonSizes = 'large' | 'medium' | 'small'
+
 type BaseButtonProps = {
-  size?: 'large' | 'medium' | 'small'
-  variant?: 'default'
-  color?: 'primary' | 'second' | 'transparent' | 'hint' | 'dangerous'
+  size?: ButtonSizes
+  variant?: ButtonVariants
+  color?: ButtonColors
   loading?: boolean
   icon?: React.ReactNode
   iconPosition?: 'left' | 'right'
@@ -21,7 +25,7 @@ type LinkElementProps = {
 } & Omit<LinkProps, 'to'> &
   BaseButtonProps
 
-type ButtonProps = ButtonElementProps | LinkElementProps
+export type ButtonProps = ButtonElementProps | LinkElementProps
 
 export const Button = (props: ButtonProps) => {
   const {
@@ -56,16 +60,16 @@ export const Button = (props: ButtonProps) => {
   )
 
   if ('to' in props) {
-    const { to, ...linkProps } = otherProps as LinkElementProps
+    const { to, onClick, ...linkProps } = otherProps as LinkElementProps
     return (
-      <Link className={classNames} to={to} {...linkProps}>
+      <Link className={classNames} to={to} {...linkProps} onClick={onClick}>
         <Children />
       </Link>
     )
   } else {
-    const { type = 'button', ...buttonProps } = otherProps as ButtonElementProps
+    const { type = 'button', onClick, ...buttonProps } = otherProps as ButtonElementProps
     return (
-      <button className={classNames} type={type} {...buttonProps}>
+      <button className={classNames} type={type} onClick={onClick} {...buttonProps}>
         <Children />
       </button>
     )

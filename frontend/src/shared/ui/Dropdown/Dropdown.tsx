@@ -3,22 +3,27 @@ import css from './Dropdown.module.scss'
 import { useRef, useState, useEffect } from 'react'
 import { useOnClickOutside } from 'shared/lib/hooks'
 
+type DropdownOption = {
+  label: string
+  value?: string | number | boolean
+  onClick: (value?: string | number | boolean) => void
+}
+
 type DropdownProps = {
-  trigger: ((isOpen: boolean) => React.ReactNode) | React.ReactNode
-  children: React.ReactNode
+  options: DropdownOption[]
+  children: ((isOpen: boolean) => React.ReactNode) | React.ReactNode
   className?: string
+  onClick?: (value?: string | number | boolean) => void
 }
 
 export const Dropdown = (props: DropdownProps) => {
-  const { trigger, children, className } = props
+  const { children, className, options, onClick } = props
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [positionAbove, setPositionAbove] = useState<boolean>(false)
   const [positionLeft, setPositionLeft] = useState<boolean>(false)
 
   const containerRef = useRef<HTMLDivElement | null>(null)
   const dropedRef = useRef<HTMLDivElement | null>(null)
-
-  const toggleOpen = () => setIsOpen((prev) => !prev)
 
   useEffect(() => {
     if (isOpen && containerRef.current && dropedRef.current) {
@@ -33,10 +38,14 @@ export const Dropdown = (props: DropdownProps) => {
 
   useOnClickOutside(containerRef, () => setIsOpen(false))
 
+  const toggleOpen = () => setIsOpen((prev) => !prev)
+
+  const clickHandler = (value?: string | number | boolean) => onClick?.(value)
+
   return (
     <div className={cn(css.Dropdown, className, { [css.Dropdown_isOpen]: isOpen })} ref={containerRef}>
       <div className={css.Dropdown__Trigger} onClick={toggleOpen}>
-        {typeof trigger === 'function' ? trigger(isOpen) : trigger}
+        {typeof children === 'function' ? children(isOpen) : children}
       </div>
       <div
         className={cn(css.Dropdown__Droped, {
@@ -44,7 +53,17 @@ export const Dropdown = (props: DropdownProps) => {
           [css.Dropdown__Droped_position_left]: positionLeft,
         })}
         ref={dropedRef}>
-        {children}
+        {options.map(({ label, onClick, value }) => (
+          <div
+            key={label}
+            className={css.Dropdown__Droped__Item}
+            onClick={() => {
+              clickHandler(value)
+              onClick?.(value)
+            }}>
+            {label}
+          </div>
+        ))}
       </div>
     </div>
   )

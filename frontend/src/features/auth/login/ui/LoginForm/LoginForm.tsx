@@ -7,6 +7,7 @@ import { type LoginFormSchema, loginFormSchema } from '../../model/loginFormSche
 import { Input } from 'shared/ui/Input'
 import { Button } from 'shared/ui/Button'
 import css from './LoginForm.module.scss'
+import { useMainButton } from 'entities/telegram'
 
 type LoginFormProps = {
   onComplete?: () => void
@@ -36,6 +37,8 @@ export function LoginForm({ onComplete }: LoginFormProps) {
     },
     [dispatch, onComplete, setError]
   )
+
+  useMainButton({ params: { text: 'Log in' }, onClick: handleSubmit(onSubmitHandler) })
 
   return (
     <form onSubmit={handleSubmit(onSubmitHandler)} className={css.Form}>
@@ -69,9 +72,11 @@ export function LoginForm({ onComplete }: LoginFormProps) {
           />
         )}
       />
-      <Button type='submit' loading={isSubmitting}>
-        Send
-      </Button>
+      {import.meta.env.DEV && (
+        <Button type='submit' loading={isSubmitting}>
+          Send
+        </Button>
+      )}
     </form>
   )
 }

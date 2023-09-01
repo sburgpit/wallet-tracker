@@ -5,9 +5,11 @@ import { RouterProvider } from './providers/RouterProvider'
 import './styles/index.scss'
 import { useTelegram } from 'entities/telegram'
 import { selectUserData } from 'entities/user'
+import { selectIsAuth } from 'entities/session'
 
 const App = () => {
   const userData = useAppSelector(selectUserData)
+  const isAuth = useAppSelector(selectIsAuth)
   const dispatch = useAppDispatch()
   const { readyApp } = useTelegram()
 
@@ -16,8 +18,9 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    if (!userData) dispatch(initSessionThunk())
-  }, [userData, dispatch])
+    console.log(userData, isAuth)
+    if (!userData || !isAuth) dispatch(initSessionThunk())
+  }, [userData, isAuth, dispatch])
 
   return <RouterProvider />
 }

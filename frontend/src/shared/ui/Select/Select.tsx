@@ -1,18 +1,18 @@
 import { cn } from 'shared/lib/utils/classNames'
 import css from './Select.module.scss'
 import { ErrorText } from '../Text'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { SlArrowDown } from 'react-icons/sl'
 import { useOnClickOutside } from 'shared/lib/hooks'
 import { Shimmer } from '../Shimmer'
 
 type SelectOption =
+  | string
   | {
       label: string
       value: string | number
       search?: string
     }
-  | string
 
 type SelectProps = {
   label: string
@@ -24,6 +24,8 @@ type SelectProps = {
   defaultValue?: string | number
   isLoading?: boolean
   searchable?: boolean
+  allowCreate?: boolean
+  onCreate?: () => Promise<SelectOption | void> | SelectOption | void
   onChange?: (value: (string | number)[] | null) => void
 }
 
@@ -31,7 +33,21 @@ const normalizeOption = (option: SelectOption): { label: string; value: string |
   typeof option === 'string' ? { label: option, value: option } : option
 
 export const Select = (props: SelectProps) => {
-  const { options, error, disabled, className, defaultValue, hasMany, label, isLoading, searchable, onChange } = props
+  const {
+    options,
+    error,
+    disabled,
+    className,
+    defaultValue,
+    hasMany,
+    label,
+    isLoading,
+    searchable,
+    allowCreate,
+    onCreate,
+    onChange,
+  } = props
+  const [selectOptions, setSelectOptions] = useState<SelectOption[]>()
   const [selectValue, setSelectValue] = useState<(string | number)[]>(defaultValue ? [defaultValue] : [])
   const [search, setSearch] = useState<string>('')
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -40,6 +56,12 @@ export const Select = (props: SelectProps) => {
   const searchInputRef = useRef<HTMLInputElement | null>(null)
 
   useOnClickOutside(selectRef, () => setIsOpen(false))
+
+  useEffect(() => {
+    if (options?.length) {
+      setSelectOptions(options)
+    }
+  }, [options])
 
   useEffect(() => {
     if (isOpen && selectRef.current) {
@@ -63,24 +85,42 @@ export const Select = (props: SelectProps) => {
     onChange?.(selectValue)
   }, [selectValue])
 
-  const changeHandler = (optionValue: string | number) => {
-    if (hasMany) {
-      setSelectValue((prev) =>
-        prev.includes(optionValue) ? prev.filter((val) => val !== optionValue) : [...prev, optionValue]
-      )
-      return
-    }
-    setIsOpen(false)
-    setSelectValue([optionValue])
-  }
+  const changeHandler = useCallback(
+    (optionValue: string | number) => {
+      if (hasMany) {
+        setSelectValue((prev) =>
+          prev.includes(optionValue) ? prev.filter((val) => val !== optionValue) : [...prev, optionValue]
+        )
+        return
+      }
+      setIsOpen(false)
+      setSelectValue([optionValue])
+    },
+    [hasMany]
+  )
+
+  const createHandler = useCallback(
+    async (event: React.MouseEvent) => {
+      event.stopPropagation()
+      if (!onCreate) return
+      const result = await onCreate()
+      if (!result) return
+      const value = normalizeOption(result).value
+      const newSelectValue = hasMany ? [value, ...selectValue] : [value]
+      setSelectValue(newSelectValue)
+      onChange?.(newSelectValue)
+    },
+    [hasMany, selectValue, onChange, onCreate]
+  )
 
   const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.currentTarget.value)
   const toggleOpen = () => setIsOpen((prev) => !prev)
 
-  const renderOptions = () => {
-    const filteredOptions = options?.filter((option) => {
+  const renderOptions = useCallback(() => {
+    const filteredOptions = selectOptions?.filter((option) => {
+      const normalize = normalizeOption(option)
       if (!searchable || !search) return true
-      const { label, value, search: optionSearch } = normalizeOption(option)
+      const { label, value, search: optionSearch } = normalize
       const searchFields = [
         label.toLocaleLowerCase(),
         `${value}`.toLocaleLowerCase(),
@@ -107,7 +147,7 @@ export const Select = (props: SelectProps) => {
         )
       })
     }
-  }
+  }, [selectOptions, search, searchable, changeHandler, selectValue])
 
   if (isLoading) return <Shimmer height={36} width={'100%'} />
 
@@ -118,6 +158,7 @@ export const Select = (props: SelectProps) => {
           [css.SelectButton_isOpen]: isOpen,
           [css.SelectButton_hasValue]: selectValue.length,
           [css.SelectButton_searchable]: searchable,
+          [css.SelectButton_withCreate]: allowCreate,
         })}
         onClick={toggleOpen}>
         <span className={css.SelectButton__Label}>{label}</span>
@@ -131,11 +172,7 @@ export const Select = (props: SelectProps) => {
               className={css.SelectButton__Search}
               onClick={(e) => e.stopPropagation()}
               ref={searchInputRef}
-              onFocus={(event) => {
-                setTimeout(() => {
-                  event.currentTarget.scrollIntoView({ block: 'end' })
-                }, 300)
-              }}
+              onFocus={(event) => {}}
             />
           )}
         </div>
@@ -147,6 +184,11 @@ export const Select = (props: SelectProps) => {
           }}>
           <SlArrowDown />
         </div>
+        {allowCreate && (
+          <div className={css.SelectButton__Create} onClick={createHandler}>
+            +
+          </div>
+        )}
       </div>
       {error && <ErrorText>{error}</ErrorText>}
       <div

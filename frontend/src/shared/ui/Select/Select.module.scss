@@ -8,7 +8,7 @@
 }
 
 .SelectButton {
-  height: 36px;
+  height: 42px;
   border-radius: var(--border-radius);
   border: 1px solid var(--hint-color);
   position: relative;
@@ -68,6 +68,10 @@
   }
 }
 
+.SelectButton_withCreate .SelectButton__Indicator {
+  padding-right: 12px
+}
+
 .SelectButton__Search {
   background-color: transparent;
   border: none;
@@ -89,13 +93,26 @@
   transform: translateY(-10%);
 }
 
+.SelectButton__Create {
+  height: 100%;
+  padding-left: 14px;
+  padding-right: 2px;
+  border-left: 1px solid var(--hint-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--second-font);
+  font-weight: 400;
+  font-size: var(--font-size-large);
+  color: var(--hint-color)
+}
+
 .SelectOptions {
   position: absolute;
   top: 80%;
   border-radius: var(--border-radius);
   border: 1px solid var(--hint-color);
-  backdrop-filter: blur(5px);
-  background-color: rgba(25, 33, 44, 0.3);
+  background-color: var(--secondary-bg-color);
   z-index: 1;
   width: 100%;
   opacity: 0;

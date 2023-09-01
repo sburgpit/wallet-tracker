@@ -19,6 +19,9 @@
   top: calc(100% + 6px);
   left: 0;
   width: max-content;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--hint-color);
+  background-color: var(--secondary-bg-color);
 
   &_position_above {
     top: auto;
@@ -28,5 +31,14 @@
   &_position_left {
     left: auto;
     right: 0;
+  }
+}
+
+.Dropdown__Droped__Item {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--hint-color);
+
+  &:last-child {
+    border-bottom: none;
   }
 }

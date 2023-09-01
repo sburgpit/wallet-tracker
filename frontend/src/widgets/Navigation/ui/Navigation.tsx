@@ -1,8 +1,7 @@
 import { memo } from 'react'
 import { selectIsAuth } from 'entities/session'
-import { useAppSelector } from 'shared/lib/hooks'
-import { LogoutButton } from 'features/auth/logout'
-import { CloseButton } from 'features/telegram/close'
+import { useAppDispatch, useAppSelector } from 'shared/lib/hooks'
+import { logoutThunk } from 'features/auth/logout'
 import { getRouteAccountList, getRouteMain, getRouteOperations, getRouteSettings } from 'shared/config/routes'
 import { Button } from 'shared/ui/Button'
 import { AiFillHome } from 'react-icons/ai'
@@ -13,10 +12,13 @@ import { SlOptionsVertical } from 'react-icons/sl'
 import { useLocation } from 'react-router-dom'
 import { Dropdown } from 'shared/ui/Dropdown'
 import css from './Navigation.module.scss'
+import { useTelegram } from 'entities/telegram'
 
 export const Navigation = memo(() => {
+  const { showConfirm, closeApp } = useTelegram()
   const { pathname } = useLocation()
   const isAuthorized = useAppSelector(selectIsAuth)
+  const dispatch = useAppDispatch()
 
   const links = [
     { path: getRouteMain(), icon: <AiFillHome /> },
@@ -24,6 +26,12 @@ export const Navigation = memo(() => {
     { path: getRouteOperations(), icon: <BiTransferAlt /> },
     { path: getRouteSettings(), icon: <IoMdSettings /> },
   ]
+
+  const logoutHandler = async () => {
+    const isConfirmed = await showConfirm('Are you sure you want to log out?')
+    if (!isConfirmed) return
+    dispatch(logoutThunk)
+  }
 
   if (!isAuthorized) return null
 
@@ -40,15 +48,15 @@ export const Navigation = memo(() => {
         })}
       </nav>
       <Dropdown
-        trigger={(isOpen) => (
+        options={[
+          { label: 'Log Out', onClick: logoutHandler },
+          { label: 'Close App', onClick: closeApp },
+        ]}>
+        {(isOpen) => (
           <Button color={isOpen ? 'primary' : 'second'} size='medium'>
             <SlOptionsVertical />
           </Button>
-        )}>
-        <div className='flex flex-column gap-xs'>
-          <LogoutButton />
-          <CloseButton />
-        </div>
+        )}
       </Dropdown>
     </header>
   )

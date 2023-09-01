@@ -1,4 +1,5 @@
 import { combineReducers } from '@reduxjs/toolkit'
+import { modalSlice } from 'entities/modal'
 import { sessionSlice } from 'entities/session'
 import { telegramSlice } from 'entities/telegram'
 import { themeSlice } from 'entities/theme'
@@ -10,5 +11,6 @@ export const rootReducer = combineReducers({
   [userSlice.name]: userSlice.reducer,
   [themeSlice.name]: themeSlice.reducer,
   [telegramSlice.name]: telegramSlice.reducer,
+  [modalSlice.name]: modalSlice.reducer,
   [baseAPI.reducerPath]: baseAPI.reducer,
 })

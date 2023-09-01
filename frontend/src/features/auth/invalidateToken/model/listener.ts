@@ -1,7 +1,7 @@
 import { invalidateToken } from 'shared/api'
 import { listenerMiddleware } from 'shared/lib/middlewares'
 import { sessionAPI } from 'entities/session'
-import { logoutThunk } from '../../logout/model/logout'
+import { logoutThunk } from '../../logout/model/logoutThunk'
 
 export const invalidateTokenListener = listenerMiddleware
 

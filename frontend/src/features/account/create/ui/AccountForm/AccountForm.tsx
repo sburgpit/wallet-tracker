@@ -12,6 +12,8 @@ import { selectUserID } from 'entities/user'
 import { AccountFormSchema, accountFormSchema } from '../../model/accountFormSchema'
 import { createAccount } from '../../model/createAccount'
 import { ErrorText } from 'shared/ui/Text'
+import { useBankListQuery, useCreateBankMutation } from 'entities/bank'
+import { setDataAndShowModal } from 'entities/modal'
 
 type AccountFormProps = {
   onComplete?: (name: string) => void
@@ -21,19 +23,23 @@ export const AccountForm = (props: AccountFormProps) => {
   const { onComplete } = props
   const { expandApp } = useTelegram()
   const dispatch = useAppDispatch()
-  const { data, isFetching } = useCurrenciesQuery()
+  const userID = useAppSelector(selectUserID)
+  const { data: currencies, isFetching: currenciesIsFetching } = useCurrenciesQuery()
+  const { data: banks, isFetching: banksIsFetching } = useBankListQuery(userID || '')
+  const [createBank, { isSuccess, isLoading }] = useCreateBankMutation()
 
   useEffect(() => {
     expandApp()
   }, [])
 
-  const defaultValues = { owner: useAppSelector(selectUserID) }
+  const defaultValues = { owner: userID }
 
   const {
     control,
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
+    watch,
   } = useForm<AccountFormSchema>({
     resolver: zodResolver(accountFormSchema),
     defaultValues,
@@ -52,14 +58,40 @@ export const AccountForm = (props: AccountFormProps) => {
     [dispatch, onComplete, setError]
   )
 
+  const onBankCreate = async () => {
+    // const name = prompt('Bank name?')
+    // if (name) {
+    //   await createBank({ name, owner: userID || '' })
+    //   return name
+    // }
+    dispatch(
+      setDataAndShowModal({
+        isShown: true,
+        data: {
+          title: 'Create Bank',
+          subtitle: 'Create Bank account',
+          buttons: ['close', { text: 'Save' }],
+          children: (
+            <div>
+              <Input label='Name' />
+            </div>
+          ),
+        },
+      })
+    )
+  }
+
   useMainButton({ params: { text: 'Create' }, onClick: handleSubmit(onSumbitHandler) })
 
   const accountTypes = ['Card', 'Account', 'Crypto', 'Cash']
+  const accountType = watch('type')
+
   return (
     <form className='flex flex-column gap-l'>
       <Controller
         name='type'
         control={control}
+        defaultValue='Cash'
         render={({ field }) => (
           <Select
             options={accountTypes}
@@ -67,25 +99,7 @@ export const AccountForm = (props: AccountFormProps) => {
             onChange={(value) => field.onChange(value?.[0])}
             error={errors.type?.message}
             disabled={isSubmitting}
-          />
-        )}
-      />
-      <Controller
-        name='currency'
-        control={control}
-        render={({ field }) => (
-          <Select
-            options={data?.docs.map((currency) => ({
-              label: `${currency.id} ${currency.sign}`,
-              value: currency.id,
-              search: currency.fullName,
-            }))}
-            label='Currency'
-            isLoading={isFetching}
-            searchable={true}
-            onChange={(value) => field.onChange(value?.[0])}
-            error={errors.currency?.message}
-            disabled={isSubmitting}
+            defaultValue='Cash'
           />
         )}
       />
@@ -96,6 +110,64 @@ export const AccountForm = (props: AccountFormProps) => {
           <Input label='Name' error={errors.name?.message} onChange={field.onChange} disabled={isSubmitting} />
         )}
       />
+      {accountType === 'Crypto' ? (
+        <Controller
+          name='cryptoCurrency'
+          control={control}
+          render={({ field }) => (
+            <Select
+              options={['ETH', 'BTC', 'USD']}
+              label='Crypto'
+              searchable={true}
+              onChange={(value) => field.onChange(value?.[0])}
+              error={errors.cryptoCurrency?.message}
+              disabled={isSubmitting}
+            />
+          )}
+        />
+      ) : (
+        <Controller
+          name='currency'
+          control={control}
+          render={({ field }) => (
+            <Select
+              options={currencies?.docs.map((currency) => ({
+                label: `${currency.id} ${currency.sign}`,
+                value: currency.id,
+                search: currency.fullName,
+              }))}
+              label='Currency'
+              isLoading={currenciesIsFetching}
+              searchable={true}
+              onChange={(value) => field.onChange(value?.[0])}
+              error={errors.currency?.message}
+              disabled={isSubmitting}
+            />
+          )}
+        />
+      )}
+
+      <Controller
+        name='bank'
+        control={control}
+        render={({ field }) => (
+          <Select
+            options={banks?.docs.map(({ id, name }) => ({
+              label: name,
+              value: id,
+            }))}
+            label='Bank'
+            isLoading={banksIsFetching}
+            searchable={true}
+            onChange={(value) => field.onChange(value?.[0])}
+            error={errors.bank?.message}
+            disabled={isSubmitting}
+            allowCreate={true}
+            onCreate={onBankCreate}
+          />
+        )}
+      />
+
       <Controller
         name='balance'
         control={control}
@@ -154,7 +226,7 @@ export const AccountForm = (props: AccountFormProps) => {
         )}
       />
       {errors.root && <ErrorText>{errors.root.message}</ErrorText>}
-      {<Button onClick={handleSubmit(onSumbitHandler)}>Create</Button>}
+      {import.meta.env.DEV && <Button onClick={handleSubmit(onSumbitHandler)}>Create</Button>}
     </form>
   )
 }

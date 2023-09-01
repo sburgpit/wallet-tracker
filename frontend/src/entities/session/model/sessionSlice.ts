@@ -1,6 +1,7 @@
 import type { RootState } from 'app/store'
 import { createSlice } from '@reduxjs/toolkit'
 import { sessionAPI } from '../api/sessionAPI'
+import { userAPI } from 'entities/user'
 
 export type SessionSliceState =
   | {
@@ -22,6 +23,12 @@ export const sessionSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addMatcher(userAPI.endpoints.me.matchFulfilled, (state: SessionSliceState, { payload }) => {
+        if (payload.userID) {
+          state.isAuth = true
+          state.tokenExpireTimestamp = payload.tokenExpireTimestamp
+        }
+      })
       .addMatcher(sessionAPI.endpoints.login.matchFulfilled, (state: SessionSliceState, { payload }) => {
         state.isAuth = true
         state.tokenExpireTimestamp = payload.tokenExpireTimestamp

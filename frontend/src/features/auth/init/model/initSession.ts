@@ -5,6 +5,7 @@ import { invalidateToken } from 'shared/api'
 export const initSessionThunk = createAsyncThunk('auth/init', async (_, { dispatch }) => {
   try {
     const result = await dispatch(userAPI.endpoints.me.initiate()).unwrap()
+    console.log('result:  ', result)
     if (!result) dispatch(invalidateToken())
   } catch (e) {
     console.log(e)

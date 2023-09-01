@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { isFetchBaseQueryError, isServerError } from 'shared/api'
 import { accountAPI } from 'entities/account'
 
-export const removeAccount = createAsyncThunk<void, string>(
+export const removeAccountThunk = createAsyncThunk<void, string>(
   'account/remove',
   async (accountID: string, { dispatch }) => {
     try {

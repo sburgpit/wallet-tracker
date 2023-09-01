@@ -7,17 +7,14 @@ import { RiBitCoinLine } from 'react-icons/ri'
 import { FiTrash2 } from 'react-icons/fi'
 import { Text } from 'shared/ui/Text'
 import { Currency } from 'types/payload-types'
-import css from './AccountCard.module.scss'
-import { useAppDispatch, useLongPress, useOnClickOutside } from 'shared/lib/hooks'
-import { useCallback, useRef, useState } from 'react'
-import { Button } from 'shared/ui/Button'
+import { useState } from 'react'
 import { cn } from 'shared/lib/utils/classNames'
-import { useTelegram } from 'entities/telegram'
-import { removeAccount } from 'features/account/remove' // @todo forbidden use fetures in entities
 import { useSwipeable } from 'react-swipeable'
+import css from './AccountCard.module.scss'
 
 type AccountCardProps = {
   account: AccountDetails
+  onRemove: (accountID: string, accountName: string) => void
 }
 
 const accountIcons: Record<AccountDetails['type'], React.ReactNode> = {
@@ -28,33 +25,13 @@ const accountIcons: Record<AccountDetails['type'], React.ReactNode> = {
 }
 
 export const AccountCard = (props: AccountCardProps) => {
-  const dispatch = useAppDispatch()
-  const { showConfirm, showAlert } = useTelegram()
-  const { account } = props
+  const { account, onRemove } = props
   const [showSettings, setShowSettings] = useState<boolean>(false)
 
   const { ref: cardRef, onMouseDown } = useSwipeable({
-    onSwipedLeft: (event) => {
-      setShowSettings(true)
-    },
-    onSwipedRight: (event) => {
-      setShowSettings(false)
-    },
+    onSwipedLeft: () => setShowSettings(true),
+    onSwipedRight: () => setShowSettings(false),
   })
-
-  const removeAccountHandler = async () => {
-    const result = await showConfirm(`Are you sure you want to DELETE the ${account.name} account?`)
-    if (!result) return
-
-    try {
-      const result = await dispatch(removeAccount(account.id))
-      showAlert(`${account.name} account has been successfully deleted`)
-      console.log(result)
-    } catch (e) {
-      console.error(e)
-      throw e
-    }
-  }
 
   return (
     <Link
@@ -81,7 +58,10 @@ export const AccountCard = (props: AccountCardProps) => {
         <button type='button' className={css.AccountCard__Settings__Button}>
           <MdEdit />
         </button>
-        <button type='button' className={css.AccountCard__Settings__Button} onClick={removeAccountHandler}>
+        <button
+          type='button'
+          className={css.AccountCard__Settings__Button}
+          onClick={() => onRemove(account.id, account.name)}>
           <FiTrash2 />
         </button>
       </div>

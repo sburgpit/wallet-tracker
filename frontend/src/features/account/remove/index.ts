@@ -1,1 +1,1 @@
-export { removeAccount } from './model/removeAccount'
+export { removeAccountThunk } from './model/removeAccountThunk'

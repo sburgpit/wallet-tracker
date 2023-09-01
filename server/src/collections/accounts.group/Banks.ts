@@ -9,7 +9,7 @@ const Banks: CollectionConfig = {
   access: {
     read: () => true,
   },
-  fields: [{ type: 'text', name: 'name' }, owner],
+  fields: [{ type: 'text', name: 'name', required: true }, owner],
 }
 
 export default Banks
